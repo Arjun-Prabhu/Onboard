@@ -1,0 +1,2281 @@
+[
+  {
+    "id": "renameColumn.Program.curriculum",
+    "label": "Rename column curriculum on Program to description",
+    "summary": "Renames column curriculum on Program to description, keeping its values",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "description",
+        "table": "Program"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"curriculum\" exists on \"Program\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Program",
+          "curriculum"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"curriculum\" on \"Program\""
+        }
+      },
+      {
+        "description": "ensure column \"description\" does not exist on \"Program\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE (\"name\" COLLATE NOCASE) = ?2",
+        "params": [
+          "Program",
+          "description"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "a column named \"description\" on \"Program\" in any case"
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "rename column \"curriculum\" on \"Program\" to \"description\"",
+        "sql": "ALTER TABLE \"Program\" RENAME COLUMN \"curriculum\" TO \"description\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"description\" exists on \"Program\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Program",
+          "description"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"description\" on \"Program\""
+        }
+      },
+      {
+        "description": "verify column \"curriculum\" no longer exists on \"Program\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Program",
+          "curriculum"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"curriculum\" on \"Program\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "renameColumn.Program.schoolId",
+    "label": "Rename column schoolId on Program to siteId",
+    "summary": "Renames column schoolId on Program to siteId, keeping its values",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "siteId",
+        "table": "Program"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"schoolId\" exists on \"Program\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Program",
+          "schoolId"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"schoolId\" on \"Program\""
+        }
+      },
+      {
+        "description": "ensure column \"siteId\" does not exist on \"Program\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE (\"name\" COLLATE NOCASE) = ?2",
+        "params": [
+          "Program",
+          "siteId"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "a column named \"siteId\" on \"Program\" in any case"
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "rename column \"schoolId\" on \"Program\" to \"siteId\"",
+        "sql": "ALTER TABLE \"Program\" RENAME COLUMN \"schoolId\" TO \"siteId\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"siteId\" exists on \"Program\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Program",
+          "siteId"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"siteId\" on \"Program\""
+        }
+      },
+      {
+        "description": "verify column \"schoolId\" no longer exists on \"Program\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Program",
+          "schoolId"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"schoolId\" on \"Program\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropIndex.Program.Program_schoolId_idx_82b454d7",
+    "label": "Drop index Program_schoolId_idx_82b454d7 on Program",
+    "summary": "Drops index Program_schoolId_idx_82b454d7 on Program which is not in the contract",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "Program_schoolId_idx_82b454d7",
+        "table": "Program"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Program_schoolId_idx_82b454d7\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Program_schoolId_idx_82b454d7"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"Program_schoolId_idx_82b454d7\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop index \"Program_schoolId_idx_82b454d7\"",
+        "sql": "DROP INDEX IF EXISTS \"Program_schoolId_idx_82b454d7\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Program_schoolId_idx_82b454d7\" is gone",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Program_schoolId_idx_82b454d7"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Program_schoolId_idx_82b454d7\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "index.Program.Program_siteId_idx_cabdc5ab",
+    "label": "Create index Program_siteId_idx_cabdc5ab on Program",
+    "summary": "Creates index Program_siteId_idx_cabdc5ab on Program",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "Program_siteId_idx_cabdc5ab",
+        "table": "Program"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Program_siteId_idx_cabdc5ab\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Program_siteId_idx_cabdc5ab"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Program_siteId_idx_cabdc5ab\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Program_siteId_idx_cabdc5ab\"",
+        "sql": "CREATE INDEX \"Program_siteId_idx_cabdc5ab\" ON \"Program\" (\"siteId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Program_siteId_idx_cabdc5ab\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Program_siteId_idx_cabdc5ab"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"Program_siteId_idx_cabdc5ab\""
+        }
+      },
+      {
+        "description": "verify index \"Program_siteId_idx_cabdc5ab\" on \"Program\" covers (siteId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('Program') WHERE name = 'Program_siteId_idx_cabdc5ab' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('Program_siteId_idx_cabdc5ab')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('Program_siteId_idx_cabdc5ab') WHERE (seqno, name) IN (VALUES (0, 'siteId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "renameColumn.Program.studentCount",
+    "label": "Rename column studentCount on Program to participantCount",
+    "summary": "Renames column studentCount on Program to participantCount, keeping its values",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "participantCount",
+        "table": "Program"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"studentCount\" exists on \"Program\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Program",
+          "studentCount"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"studentCount\" on \"Program\""
+        }
+      },
+      {
+        "description": "ensure column \"participantCount\" does not exist on \"Program\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE (\"name\" COLLATE NOCASE) = ?2",
+        "params": [
+          "Program",
+          "participantCount"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "a column named \"participantCount\" on \"Program\" in any case"
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "rename column \"studentCount\" on \"Program\" to \"participantCount\"",
+        "sql": "ALTER TABLE \"Program\" RENAME COLUMN \"studentCount\" TO \"participantCount\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"participantCount\" exists on \"Program\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Program",
+          "participantCount"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"participantCount\" on \"Program\""
+        }
+      },
+      {
+        "description": "verify column \"studentCount\" no longer exists on \"Program\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Program",
+          "studentCount"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"studentCount\" on \"Program\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "renameColumn.Session.lessonTopic",
+    "label": "Rename column lessonTopic on Session to title",
+    "summary": "Renames column lessonTopic on Session to title, keeping its values",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "title",
+        "table": "Session"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"lessonTopic\" exists on \"Session\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Session",
+          "lessonTopic"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"lessonTopic\" on \"Session\""
+        }
+      },
+      {
+        "description": "ensure column \"title\" does not exist on \"Session\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE (\"name\" COLLATE NOCASE) = ?2",
+        "params": [
+          "Session",
+          "title"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "a column named \"title\" on \"Session\" in any case"
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "rename column \"lessonTopic\" on \"Session\" to \"title\"",
+        "sql": "ALTER TABLE \"Session\" RENAME COLUMN \"lessonTopic\" TO \"title\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"title\" exists on \"Session\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Session",
+          "title"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"title\" on \"Session\""
+        }
+      },
+      {
+        "description": "verify column \"lessonTopic\" no longer exists on \"Session\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Session",
+          "lessonTopic"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"lessonTopic\" on \"Session\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "renameColumn.Session.mentorsNeeded",
+    "label": "Rename column mentorsNeeded on Session to volunteersNeeded",
+    "summary": "Renames column mentorsNeeded on Session to volunteersNeeded, keeping its values",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "volunteersNeeded",
+        "table": "Session"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"mentorsNeeded\" exists on \"Session\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Session",
+          "mentorsNeeded"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"mentorsNeeded\" on \"Session\""
+        }
+      },
+      {
+        "description": "ensure column \"volunteersNeeded\" does not exist on \"Session\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE (\"name\" COLLATE NOCASE) = ?2",
+        "params": [
+          "Session",
+          "volunteersNeeded"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "a column named \"volunteersNeeded\" on \"Session\" in any case"
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "rename column \"mentorsNeeded\" on \"Session\" to \"volunteersNeeded\"",
+        "sql": "ALTER TABLE \"Session\" RENAME COLUMN \"mentorsNeeded\" TO \"volunteersNeeded\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"volunteersNeeded\" exists on \"Session\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Session",
+          "volunteersNeeded"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"volunteersNeeded\" on \"Session\""
+        }
+      },
+      {
+        "description": "verify column \"mentorsNeeded\" no longer exists on \"Session\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Session",
+          "mentorsNeeded"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"mentorsNeeded\" on \"Session\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "renameTable.Kit",
+    "label": "Rename table Kit to Equipment",
+    "summary": "Renames table Kit to Equipment, keeping its rows",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "Equipment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Kit\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "Kit"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Kit\""
+        }
+      },
+      {
+        "description": "ensure no table or index is named \"Equipment\" in any case",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"name\" COLLATE NOCASE) = ?1",
+        "params": [
+          "Equipment"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "a table or index named \"Equipment\" in any case"
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "rename table \"Kit\" to \"Equipment\"",
+        "sql": "ALTER TABLE \"Kit\" RENAME TO \"Equipment\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Equipment\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "Equipment"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Equipment\""
+        }
+      },
+      {
+        "description": "verify table \"Kit\" no longer exists",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "Kit"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Kit\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropIndex.Equipment.Kit_orgId_idx_c5e5aabe",
+    "label": "Drop index Kit_orgId_idx_c5e5aabe on Equipment",
+    "summary": "Drops index Kit_orgId_idx_c5e5aabe on Equipment which is not in the contract",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "Kit_orgId_idx_c5e5aabe",
+        "table": "Equipment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Kit_orgId_idx_c5e5aabe\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Kit_orgId_idx_c5e5aabe"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"Kit_orgId_idx_c5e5aabe\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop index \"Kit_orgId_idx_c5e5aabe\"",
+        "sql": "DROP INDEX IF EXISTS \"Kit_orgId_idx_c5e5aabe\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Kit_orgId_idx_c5e5aabe\" is gone",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Kit_orgId_idx_c5e5aabe"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Kit_orgId_idx_c5e5aabe\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropIndex.Equipment.Kit_programId_idx_4e50c706",
+    "label": "Drop index Kit_programId_idx_4e50c706 on Equipment",
+    "summary": "Drops index Kit_programId_idx_4e50c706 on Equipment which is not in the contract",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "Kit_programId_idx_4e50c706",
+        "table": "Equipment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Kit_programId_idx_4e50c706\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Kit_programId_idx_4e50c706"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"Kit_programId_idx_4e50c706\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop index \"Kit_programId_idx_4e50c706\"",
+        "sql": "DROP INDEX IF EXISTS \"Kit_programId_idx_4e50c706\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Kit_programId_idx_4e50c706\" is gone",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Kit_programId_idx_4e50c706"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Kit_programId_idx_4e50c706\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "index.Equipment.Equipment_orgId_idx_c5e5aabe",
+    "label": "Create index Equipment_orgId_idx_c5e5aabe on Equipment",
+    "summary": "Creates index Equipment_orgId_idx_c5e5aabe on Equipment",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "Equipment_orgId_idx_c5e5aabe",
+        "table": "Equipment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Equipment_orgId_idx_c5e5aabe\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Equipment_orgId_idx_c5e5aabe"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Equipment_orgId_idx_c5e5aabe\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Equipment_orgId_idx_c5e5aabe\"",
+        "sql": "CREATE INDEX \"Equipment_orgId_idx_c5e5aabe\" ON \"Equipment\" (\"orgId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Equipment_orgId_idx_c5e5aabe\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Equipment_orgId_idx_c5e5aabe"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"Equipment_orgId_idx_c5e5aabe\""
+        }
+      },
+      {
+        "description": "verify index \"Equipment_orgId_idx_c5e5aabe\" on \"Equipment\" covers (orgId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('Equipment') WHERE name = 'Equipment_orgId_idx_c5e5aabe' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('Equipment_orgId_idx_c5e5aabe')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('Equipment_orgId_idx_c5e5aabe') WHERE (seqno, name) IN (VALUES (0, 'orgId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.Equipment.Equipment_programId_idx_4e50c706",
+    "label": "Create index Equipment_programId_idx_4e50c706 on Equipment",
+    "summary": "Creates index Equipment_programId_idx_4e50c706 on Equipment",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "Equipment_programId_idx_4e50c706",
+        "table": "Equipment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Equipment_programId_idx_4e50c706\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Equipment_programId_idx_4e50c706"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Equipment_programId_idx_4e50c706\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Equipment_programId_idx_4e50c706\"",
+        "sql": "CREATE INDEX \"Equipment_programId_idx_4e50c706\" ON \"Equipment\" (\"programId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Equipment_programId_idx_4e50c706\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Equipment_programId_idx_4e50c706"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"Equipment_programId_idx_4e50c706\""
+        }
+      },
+      {
+        "description": "verify index \"Equipment_programId_idx_4e50c706\" on \"Equipment\" covers (programId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('Equipment') WHERE name = 'Equipment_programId_idx_4e50c706' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('Equipment_programId_idx_4e50c706')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('Equipment_programId_idx_4e50c706') WHERE (seqno, name) IN (VALUES (0, 'programId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "renameTable.School",
+    "label": "Rename table School to Site",
+    "summary": "Renames table School to Site, keeping its rows",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "Site"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"School\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "School"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"School\""
+        }
+      },
+      {
+        "description": "ensure no table or index is named \"Site\" in any case",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"name\" COLLATE NOCASE) = ?1",
+        "params": [
+          "Site"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "a table or index named \"Site\" in any case"
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "rename table \"School\" to \"Site\"",
+        "sql": "ALTER TABLE \"School\" RENAME TO \"Site\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Site\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "Site"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Site\""
+        }
+      },
+      {
+        "description": "verify table \"School\" no longer exists",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "School"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"School\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropIndex.Site.School_orgId_idx_c5e5aabe",
+    "label": "Drop index School_orgId_idx_c5e5aabe on Site",
+    "summary": "Drops index School_orgId_idx_c5e5aabe on Site which is not in the contract",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "School_orgId_idx_c5e5aabe",
+        "table": "Site"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"School_orgId_idx_c5e5aabe\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "School_orgId_idx_c5e5aabe"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"School_orgId_idx_c5e5aabe\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop index \"School_orgId_idx_c5e5aabe\"",
+        "sql": "DROP INDEX IF EXISTS \"School_orgId_idx_c5e5aabe\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"School_orgId_idx_c5e5aabe\" is gone",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "School_orgId_idx_c5e5aabe"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"School_orgId_idx_c5e5aabe\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "index.Site.Site_orgId_idx_c5e5aabe",
+    "label": "Create index Site_orgId_idx_c5e5aabe on Site",
+    "summary": "Creates index Site_orgId_idx_c5e5aabe on Site",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "Site_orgId_idx_c5e5aabe",
+        "table": "Site"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Site_orgId_idx_c5e5aabe\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Site_orgId_idx_c5e5aabe"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Site_orgId_idx_c5e5aabe\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Site_orgId_idx_c5e5aabe\"",
+        "sql": "CREATE INDEX \"Site_orgId_idx_c5e5aabe\" ON \"Site\" (\"orgId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Site_orgId_idx_c5e5aabe\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Site_orgId_idx_c5e5aabe"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"Site_orgId_idx_c5e5aabe\""
+        }
+      },
+      {
+        "description": "verify index \"Site_orgId_idx_c5e5aabe\" on \"Site\" covers (orgId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('Site') WHERE name = 'Site_orgId_idx_c5e5aabe' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('Site_orgId_idx_c5e5aabe')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('Site_orgId_idx_c5e5aabe') WHERE (seqno, name) IN (VALUES (0, 'orgId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "renameColumn.Equipment.model",
+    "label": "Rename column model on Equipment to name",
+    "summary": "Renames column model on Equipment to name, keeping its values",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "name",
+        "table": "Equipment"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"model\" exists on \"Equipment\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Equipment",
+          "model"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"model\" on \"Equipment\""
+        }
+      },
+      {
+        "description": "ensure column \"name\" does not exist on \"Equipment\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE (\"name\" COLLATE NOCASE) = ?2",
+        "params": [
+          "Equipment",
+          "name"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "a column named \"name\" on \"Equipment\" in any case"
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "rename column \"model\" on \"Equipment\" to \"name\"",
+        "sql": "ALTER TABLE \"Equipment\" RENAME COLUMN \"model\" TO \"name\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"name\" exists on \"Equipment\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Equipment",
+          "name"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"name\" on \"Equipment\""
+        }
+      },
+      {
+        "description": "verify column \"model\" no longer exists on \"Equipment\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Equipment",
+          "model"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"model\" on \"Equipment\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "renameColumn.Site.gradeMax",
+    "label": "Rename column gradeMax on Site to rangeMax",
+    "summary": "Renames column gradeMax on Site to rangeMax, keeping its values",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "rangeMax",
+        "table": "Site"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"gradeMax\" exists on \"Site\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Site",
+          "gradeMax"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"gradeMax\" on \"Site\""
+        }
+      },
+      {
+        "description": "ensure column \"rangeMax\" does not exist on \"Site\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE (\"name\" COLLATE NOCASE) = ?2",
+        "params": [
+          "Site",
+          "rangeMax"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "a column named \"rangeMax\" on \"Site\" in any case"
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "rename column \"gradeMax\" on \"Site\" to \"rangeMax\"",
+        "sql": "ALTER TABLE \"Site\" RENAME COLUMN \"gradeMax\" TO \"rangeMax\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"rangeMax\" exists on \"Site\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Site",
+          "rangeMax"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"rangeMax\" on \"Site\""
+        }
+      },
+      {
+        "description": "verify column \"gradeMax\" no longer exists on \"Site\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Site",
+          "gradeMax"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"gradeMax\" on \"Site\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "renameColumn.Site.gradeMin",
+    "label": "Rename column gradeMin on Site to rangeMin",
+    "summary": "Renames column gradeMin on Site to rangeMin, keeping its values",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "rangeMin",
+        "table": "Site"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"gradeMin\" exists on \"Site\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Site",
+          "gradeMin"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"gradeMin\" on \"Site\""
+        }
+      },
+      {
+        "description": "ensure column \"rangeMin\" does not exist on \"Site\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE (\"name\" COLLATE NOCASE) = ?2",
+        "params": [
+          "Site",
+          "rangeMin"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "a column named \"rangeMin\" on \"Site\" in any case"
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "rename column \"gradeMin\" on \"Site\" to \"rangeMin\"",
+        "sql": "ALTER TABLE \"Site\" RENAME COLUMN \"gradeMin\" TO \"rangeMin\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"rangeMin\" exists on \"Site\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Site",
+          "rangeMin"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"rangeMin\" on \"Site\""
+        }
+      },
+      {
+        "description": "verify column \"gradeMin\" no longer exists on \"Site\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Site",
+          "gradeMin"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"gradeMin\" on \"Site\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "renameColumn.Site.isTitleI",
+    "label": "Rename column isTitleI on Site to priority",
+    "summary": "Renames column isTitleI on Site to priority, keeping its values",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "priority",
+        "table": "Site"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"isTitleI\" exists on \"Site\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Site",
+          "isTitleI"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"isTitleI\" on \"Site\""
+        }
+      },
+      {
+        "description": "ensure column \"priority\" does not exist on \"Site\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE (\"name\" COLLATE NOCASE) = ?2",
+        "params": [
+          "Site",
+          "priority"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "a column named \"priority\" on \"Site\" in any case"
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "rename column \"isTitleI\" on \"Site\" to \"priority\"",
+        "sql": "ALTER TABLE \"Site\" RENAME COLUMN \"isTitleI\" TO \"priority\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"priority\" exists on \"Site\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Site",
+          "priority"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"priority\" on \"Site\""
+        }
+      },
+      {
+        "description": "verify column \"isTitleI\" no longer exists on \"Site\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "Site",
+          "isTitleI"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"isTitleI\" on \"Site\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.OrgEventRole",
+    "label": "Create table OrgEventRole",
+    "summary": "Creates table OrgEventRole with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "OrgEventRole"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"OrgEventRole\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "OrgEventRole"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"OrgEventRole\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"OrgEventRole\"",
+        "sql": "CREATE TABLE \"OrgEventRole\" (\n  \"id\" TEXT NOT NULL,\n  \"name\" TEXT NOT NULL,\n  \"orgId\" TEXT NOT NULL,\n  \"position\" INTEGER NOT NULL,\n  PRIMARY KEY (\"id\"),\n  FOREIGN KEY (\"orgId\") REFERENCES \"Organization\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"OrgEventRole\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "OrgEventRole"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"OrgEventRole\""
+        }
+      },
+      {
+        "description": "verify table \"OrgEventRole\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('OrgEventRole')) = 4 AND (SELECT COUNT(*) FROM pragma_table_info('OrgEventRole') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('id', 'text', 1, 1), ('name', 'text', 1, 0), ('orgId', 'text', 1, 0), ('position', 'integer', 1, 0))) = 4"
+      }
+    ]
+  },
+  {
+    "id": "table.OrgSkill",
+    "label": "Create table OrgSkill",
+    "summary": "Creates table OrgSkill with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "OrgSkill"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"OrgSkill\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "OrgSkill"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"OrgSkill\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"OrgSkill\"",
+        "sql": "CREATE TABLE \"OrgSkill\" (\n  \"orgId\" TEXT NOT NULL,\n  \"position\" INTEGER NOT NULL,\n  \"skillId\" TEXT NOT NULL,\n  PRIMARY KEY (\"orgId\", \"skillId\"),\n  FOREIGN KEY (\"orgId\") REFERENCES \"Organization\" (\"id\"),\n  FOREIGN KEY (\"skillId\") REFERENCES \"Skill\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"OrgSkill\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "OrgSkill"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"OrgSkill\""
+        }
+      },
+      {
+        "description": "verify table \"OrgSkill\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('OrgSkill')) = 3 AND (SELECT COUNT(*) FROM pragma_table_info('OrgSkill') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('orgId', 'text', 1, 1), ('position', 'integer', 1, 0), ('skillId', 'text', 1, 2))) = 3"
+      }
+    ]
+  },
+  {
+    "id": "table.Requirement",
+    "label": "Create table Requirement",
+    "summary": "Creates table Requirement with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "Requirement"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Requirement\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "Requirement"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Requirement\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Requirement\"",
+        "sql": "CREATE TABLE \"Requirement\" (\n  \"archived\" INTEGER NOT NULL,\n  \"description\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"name\" TEXT NOT NULL,\n  \"orgId\" TEXT NOT NULL,\n  \"position\" INTEGER NOT NULL,\n  \"validMonths\" INTEGER,\n  PRIMARY KEY (\"id\"),\n  FOREIGN KEY (\"orgId\") REFERENCES \"Organization\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Requirement\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "Requirement"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Requirement\""
+        }
+      },
+      {
+        "description": "verify table \"Requirement\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('Requirement')) = 7 AND (SELECT COUNT(*) FROM pragma_table_info('Requirement') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('archived', 'integer', 1, 0), ('description', 'text', 1, 0), ('id', 'text', 1, 1), ('name', 'text', 1, 0), ('orgId', 'text', 1, 0), ('position', 'integer', 1, 0), ('validMonths', 'integer', 0, 0))) = 7"
+      }
+    ]
+  },
+  {
+    "id": "table.VolunteerRequirement",
+    "label": "Create table VolunteerRequirement",
+    "summary": "Creates table VolunteerRequirement with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "VolunteerRequirement"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"VolunteerRequirement\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "VolunteerRequirement"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"VolunteerRequirement\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"VolunteerRequirement\"",
+        "sql": "CREATE TABLE \"VolunteerRequirement\" (\n  \"completedAt\" TEXT NOT NULL,\n  \"expiresAt\" TEXT,\n  \"orgVolunteerId\" TEXT NOT NULL,\n  \"recordedBy\" TEXT NOT NULL,\n  \"requirementId\" TEXT NOT NULL,\n  PRIMARY KEY (\"orgVolunteerId\", \"requirementId\"),\n  FOREIGN KEY (\"orgVolunteerId\") REFERENCES \"OrgVolunteer\" (\"id\"),\n  FOREIGN KEY (\"requirementId\") REFERENCES \"Requirement\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"VolunteerRequirement\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "VolunteerRequirement"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"VolunteerRequirement\""
+        }
+      },
+      {
+        "description": "verify table \"VolunteerRequirement\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('VolunteerRequirement')) = 5 AND (SELECT COUNT(*) FROM pragma_table_info('VolunteerRequirement') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('completedAt', 'text', 1, 0), ('expiresAt', 'text', 0, 0), ('orgVolunteerId', 'text', 1, 1), ('recordedBy', 'text', 1, 0), ('requirementId', 'text', 1, 2))) = 5"
+      }
+    ]
+  },
+  {
+    "id": "index.OrgEventRole.OrgEventRole_orgId_idx_c5e5aabe",
+    "label": "Create index OrgEventRole_orgId_idx_c5e5aabe on OrgEventRole",
+    "summary": "Creates index OrgEventRole_orgId_idx_c5e5aabe on OrgEventRole",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "OrgEventRole_orgId_idx_c5e5aabe",
+        "table": "OrgEventRole"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"OrgEventRole_orgId_idx_c5e5aabe\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "OrgEventRole_orgId_idx_c5e5aabe"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"OrgEventRole_orgId_idx_c5e5aabe\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"OrgEventRole_orgId_idx_c5e5aabe\"",
+        "sql": "CREATE INDEX \"OrgEventRole_orgId_idx_c5e5aabe\" ON \"OrgEventRole\" (\"orgId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"OrgEventRole_orgId_idx_c5e5aabe\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "OrgEventRole_orgId_idx_c5e5aabe"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"OrgEventRole_orgId_idx_c5e5aabe\""
+        }
+      },
+      {
+        "description": "verify index \"OrgEventRole_orgId_idx_c5e5aabe\" on \"OrgEventRole\" covers (orgId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('OrgEventRole') WHERE name = 'OrgEventRole_orgId_idx_c5e5aabe' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('OrgEventRole_orgId_idx_c5e5aabe')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('OrgEventRole_orgId_idx_c5e5aabe') WHERE (seqno, name) IN (VALUES (0, 'orgId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.OrgSkill.OrgSkill_orgId_idx_c5e5aabe",
+    "label": "Create index OrgSkill_orgId_idx_c5e5aabe on OrgSkill",
+    "summary": "Creates index OrgSkill_orgId_idx_c5e5aabe on OrgSkill",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "OrgSkill_orgId_idx_c5e5aabe",
+        "table": "OrgSkill"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"OrgSkill_orgId_idx_c5e5aabe\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "OrgSkill_orgId_idx_c5e5aabe"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"OrgSkill_orgId_idx_c5e5aabe\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"OrgSkill_orgId_idx_c5e5aabe\"",
+        "sql": "CREATE INDEX \"OrgSkill_orgId_idx_c5e5aabe\" ON \"OrgSkill\" (\"orgId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"OrgSkill_orgId_idx_c5e5aabe\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "OrgSkill_orgId_idx_c5e5aabe"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"OrgSkill_orgId_idx_c5e5aabe\""
+        }
+      },
+      {
+        "description": "verify index \"OrgSkill_orgId_idx_c5e5aabe\" on \"OrgSkill\" covers (orgId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('OrgSkill') WHERE name = 'OrgSkill_orgId_idx_c5e5aabe' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('OrgSkill_orgId_idx_c5e5aabe')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('OrgSkill_orgId_idx_c5e5aabe') WHERE (seqno, name) IN (VALUES (0, 'orgId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.OrgSkill.OrgSkill_skillId_idx_6e19993d",
+    "label": "Create index OrgSkill_skillId_idx_6e19993d on OrgSkill",
+    "summary": "Creates index OrgSkill_skillId_idx_6e19993d on OrgSkill",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "OrgSkill_skillId_idx_6e19993d",
+        "table": "OrgSkill"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"OrgSkill_skillId_idx_6e19993d\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "OrgSkill_skillId_idx_6e19993d"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"OrgSkill_skillId_idx_6e19993d\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"OrgSkill_skillId_idx_6e19993d\"",
+        "sql": "CREATE INDEX \"OrgSkill_skillId_idx_6e19993d\" ON \"OrgSkill\" (\"skillId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"OrgSkill_skillId_idx_6e19993d\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "OrgSkill_skillId_idx_6e19993d"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"OrgSkill_skillId_idx_6e19993d\""
+        }
+      },
+      {
+        "description": "verify index \"OrgSkill_skillId_idx_6e19993d\" on \"OrgSkill\" covers (skillId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('OrgSkill') WHERE name = 'OrgSkill_skillId_idx_6e19993d' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('OrgSkill_skillId_idx_6e19993d')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('OrgSkill_skillId_idx_6e19993d') WHERE (seqno, name) IN (VALUES (0, 'skillId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.Requirement.Requirement_orgId_idx_c5e5aabe",
+    "label": "Create index Requirement_orgId_idx_c5e5aabe on Requirement",
+    "summary": "Creates index Requirement_orgId_idx_c5e5aabe on Requirement",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "Requirement_orgId_idx_c5e5aabe",
+        "table": "Requirement"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Requirement_orgId_idx_c5e5aabe\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Requirement_orgId_idx_c5e5aabe"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Requirement_orgId_idx_c5e5aabe\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Requirement_orgId_idx_c5e5aabe\"",
+        "sql": "CREATE INDEX \"Requirement_orgId_idx_c5e5aabe\" ON \"Requirement\" (\"orgId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Requirement_orgId_idx_c5e5aabe\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "Requirement_orgId_idx_c5e5aabe"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"Requirement_orgId_idx_c5e5aabe\""
+        }
+      },
+      {
+        "description": "verify index \"Requirement_orgId_idx_c5e5aabe\" on \"Requirement\" covers (orgId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('Requirement') WHERE name = 'Requirement_orgId_idx_c5e5aabe' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('Requirement_orgId_idx_c5e5aabe')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('Requirement_orgId_idx_c5e5aabe') WHERE (seqno, name) IN (VALUES (0, 'orgId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.VolunteerRequirement.VolunteerRequirement_orgVolunteerId_idx_1aee60fd",
+    "label": "Create index VolunteerRequirement_orgVolunteerId_idx_1aee60fd on VolunteerRequirement",
+    "summary": "Creates index VolunteerRequirement_orgVolunteerId_idx_1aee60fd on VolunteerRequirement",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "VolunteerRequirement_orgVolunteerId_idx_1aee60fd",
+        "table": "VolunteerRequirement"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"VolunteerRequirement_orgVolunteerId_idx_1aee60fd\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "VolunteerRequirement_orgVolunteerId_idx_1aee60fd"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"VolunteerRequirement_orgVolunteerId_idx_1aee60fd\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"VolunteerRequirement_orgVolunteerId_idx_1aee60fd\"",
+        "sql": "CREATE INDEX \"VolunteerRequirement_orgVolunteerId_idx_1aee60fd\" ON \"VolunteerRequirement\" (\"orgVolunteerId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"VolunteerRequirement_orgVolunteerId_idx_1aee60fd\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "VolunteerRequirement_orgVolunteerId_idx_1aee60fd"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"VolunteerRequirement_orgVolunteerId_idx_1aee60fd\""
+        }
+      },
+      {
+        "description": "verify index \"VolunteerRequirement_orgVolunteerId_idx_1aee60fd\" on \"VolunteerRequirement\" covers (orgVolunteerId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('VolunteerRequirement') WHERE name = 'VolunteerRequirement_orgVolunteerId_idx_1aee60fd' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('VolunteerRequirement_orgVolunteerId_idx_1aee60fd')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('VolunteerRequirement_orgVolunteerId_idx_1aee60fd') WHERE (seqno, name) IN (VALUES (0, 'orgVolunteerId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.VolunteerRequirement.VolunteerRequirement_requirementId_idx_fb134ad7",
+    "label": "Create index VolunteerRequirement_requirementId_idx_fb134ad7 on VolunteerRequirement",
+    "summary": "Creates index VolunteerRequirement_requirementId_idx_fb134ad7 on VolunteerRequirement",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "VolunteerRequirement_requirementId_idx_fb134ad7",
+        "table": "VolunteerRequirement"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"VolunteerRequirement_requirementId_idx_fb134ad7\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "VolunteerRequirement_requirementId_idx_fb134ad7"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"VolunteerRequirement_requirementId_idx_fb134ad7\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"VolunteerRequirement_requirementId_idx_fb134ad7\"",
+        "sql": "CREATE INDEX \"VolunteerRequirement_requirementId_idx_fb134ad7\" ON \"VolunteerRequirement\" (\"requirementId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"VolunteerRequirement_requirementId_idx_fb134ad7\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "index",
+          "VolunteerRequirement_requirementId_idx_fb134ad7"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"VolunteerRequirement_requirementId_idx_fb134ad7\""
+        }
+      },
+      {
+        "description": "verify index \"VolunteerRequirement_requirementId_idx_fb134ad7\" on \"VolunteerRequirement\" covers (requirementId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('VolunteerRequirement') WHERE name = 'VolunteerRequirement_requirementId_idx_fb134ad7' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('VolunteerRequirement_requirementId_idx_fb134ad7')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('VolunteerRequirement_requirementId_idx_fb134ad7') WHERE (seqno, name) IN (VALUES (0, 'requirementId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "recreateTable.Organization",
+    "label": "Recreate table Organization",
+    "summary": "Recreates table Organization to apply schema changes: database/Organization/column:equipmentTerm; database/Organization/column:featureEquipment; database/Organization/column:featureGuests; database/Organization/column:featurePriority; database/Organization/column:participantTerm; database/Organization/column:priorityLabel; database/Organization/column:rangeKind; database/Organization/column:sector; database/Organization/column:siteTerm",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "Organization"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Organization\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "Organization"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Organization\""
+        }
+      },
+      {
+        "description": "ensure temp table \"_prisma_new_Organization\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "_prisma_new_Organization"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "temp table \"_prisma_new_Organization\""
+        }
+      },
+      {
+        "description": "ensure table \"Organization\" has exactly the columns the rebuild copies or leaves out (createdAt, description, id, name, timezone)",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('Organization')) = 5 AND (SELECT COUNT(*) FROM pragma_table_info('Organization') WHERE name IN ('createdAt', 'description', 'id', 'name', 'timezone')) = 5"
+      }
+    ],
+    "execute": [
+      {
+        "description": "create new table \"_prisma_new_Organization\" with desired schema",
+        "sql": "CREATE TABLE \"_prisma_new_Organization\" (\n  \"createdAt\" TEXT NOT NULL,\n  \"description\" TEXT NOT NULL,\n  \"equipmentTerm\" TEXT NOT NULL,\n  \"featureEquipment\" INTEGER NOT NULL,\n  \"featureGuests\" INTEGER NOT NULL,\n  \"featurePriority\" INTEGER NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"name\" TEXT NOT NULL,\n  \"participantTerm\" TEXT NOT NULL,\n  \"priorityLabel\" TEXT NOT NULL,\n  \"rangeKind\" TEXT NOT NULL,\n  \"sector\" TEXT NOT NULL,\n  \"siteTerm\" TEXT NOT NULL,\n  \"timezone\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"name\")\n)"
+      },
+      {
+        "description": "copy data from \"Organization\" to \"_prisma_new_Organization\"",
+        "sql": "INSERT INTO \"_prisma_new_Organization\" (\"createdAt\", \"description\", \"equipmentTerm\", \"featureEquipment\", \"featureGuests\", \"featurePriority\", \"id\", \"name\", \"participantTerm\", \"priorityLabel\", \"siteTerm\", \"timezone\") SELECT \"createdAt\", \"description\", '', 0, 0, 0, \"id\", \"name\", '', '', '', \"timezone\" FROM \"Organization\""
+      },
+      {
+        "description": "drop old table \"Organization\"",
+        "sql": "DROP TABLE \"Organization\""
+      },
+      {
+        "description": "rename \"_prisma_new_Organization\" to \"Organization\"",
+        "sql": "ALTER TABLE \"_prisma_new_Organization\" RENAME TO \"Organization\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Organization\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "Organization"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Organization\""
+        }
+      },
+      {
+        "description": "verify temp table \"_prisma_new_Organization\" is gone",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "_prisma_new_Organization"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "temp table \"_prisma_new_Organization\""
+        }
+      },
+      {
+        "description": "verify \"Organization\" is stored as the rebuilt table",
+        "sql": "SELECT (SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'Organization') = 'CREATE TABLE \"Organization\" (\n  \"createdAt\" TEXT NOT NULL,\n  \"description\" TEXT NOT NULL,\n  \"equipmentTerm\" TEXT NOT NULL,\n  \"featureEquipment\" INTEGER NOT NULL,\n  \"featureGuests\" INTEGER NOT NULL,\n  \"featurePriority\" INTEGER NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"name\" TEXT NOT NULL,\n  \"participantTerm\" TEXT NOT NULL,\n  \"priorityLabel\" TEXT NOT NULL,\n  \"rangeKind\" TEXT NOT NULL,\n  \"sector\" TEXT NOT NULL,\n  \"siteTerm\" TEXT NOT NULL,\n  \"timezone\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"name\")\n)'"
+      },
+      {
+        "description": "verify \"equipmentTerm\" nullability on \"Organization\"",
+        "sql": "SELECT COUNT(*) > 0 FROM pragma_table_info('Organization') WHERE name = 'equipmentTerm' AND \"notnull\" = 1"
+      },
+      {
+        "description": "verify \"featureEquipment\" nullability on \"Organization\"",
+        "sql": "SELECT COUNT(*) > 0 FROM pragma_table_info('Organization') WHERE name = 'featureEquipment' AND \"notnull\" = 1"
+      },
+      {
+        "description": "verify \"featureGuests\" nullability on \"Organization\"",
+        "sql": "SELECT COUNT(*) > 0 FROM pragma_table_info('Organization') WHERE name = 'featureGuests' AND \"notnull\" = 1"
+      },
+      {
+        "description": "verify \"featurePriority\" nullability on \"Organization\"",
+        "sql": "SELECT COUNT(*) > 0 FROM pragma_table_info('Organization') WHERE name = 'featurePriority' AND \"notnull\" = 1"
+      },
+      {
+        "description": "verify \"participantTerm\" nullability on \"Organization\"",
+        "sql": "SELECT COUNT(*) > 0 FROM pragma_table_info('Organization') WHERE name = 'participantTerm' AND \"notnull\" = 1"
+      },
+      {
+        "description": "verify \"priorityLabel\" nullability on \"Organization\"",
+        "sql": "SELECT COUNT(*) > 0 FROM pragma_table_info('Organization') WHERE name = 'priorityLabel' AND \"notnull\" = 1"
+      },
+      {
+        "description": "verify \"rangeKind\" nullability on \"Organization\"",
+        "sql": "SELECT COUNT(*) > 0 FROM pragma_table_info('Organization') WHERE name = 'rangeKind' AND \"notnull\" = 1",
+        "meta": {
+          "requiredColumn": {
+            "table": "Organization",
+            "column": "rangeKind",
+            "reason": "newField"
+          }
+        }
+      },
+      {
+        "description": "verify \"sector\" nullability on \"Organization\"",
+        "sql": "SELECT COUNT(*) > 0 FROM pragma_table_info('Organization') WHERE name = 'sector' AND \"notnull\" = 1",
+        "meta": {
+          "requiredColumn": {
+            "table": "Organization",
+            "column": "sector",
+            "reason": "newField"
+          }
+        }
+      },
+      {
+        "description": "verify \"siteTerm\" nullability on \"Organization\"",
+        "sql": "SELECT COUNT(*) > 0 FROM pragma_table_info('Organization') WHERE name = 'siteTerm' AND \"notnull\" = 1"
+      }
+    ]
+  },
+  {
+    "id": "recreateTable.Program",
+    "label": "Recreate table Program",
+    "summary": "Recreates table Program to apply schema changes: database/Program/column:targetRatio",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "Program"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Program\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "Program"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Program\""
+        }
+      },
+      {
+        "description": "ensure temp table \"_prisma_new_Program\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "_prisma_new_Program"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "temp table \"_prisma_new_Program\""
+        }
+      },
+      {
+        "description": "ensure table \"Program\" has exactly the columns the rebuild copies or leaves out (archived, description, endDate, id, name, siteId, startDate, participantCount, targetRatio, type)",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('Program')) = 10 AND (SELECT COUNT(*) FROM pragma_table_info('Program') WHERE name IN ('archived', 'description', 'endDate', 'id', 'name', 'siteId', 'startDate', 'participantCount', 'targetRatio', 'type')) = 10"
+      }
+    ],
+    "execute": [
+      {
+        "description": "create new table \"_prisma_new_Program\" with desired schema",
+        "sql": "CREATE TABLE \"_prisma_new_Program\" (\n  \"archived\" INTEGER NOT NULL,\n  \"description\" TEXT NOT NULL,\n  \"endDate\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"name\" TEXT NOT NULL,\n  \"participantCount\" INTEGER NOT NULL,\n  \"siteId\" TEXT NOT NULL,\n  \"startDate\" TEXT NOT NULL,\n  \"targetRatio\" INTEGER,\n  \"type\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  FOREIGN KEY (\"siteId\") REFERENCES \"Site\" (\"id\")\n)"
+      },
+      {
+        "description": "copy data from \"Program\" to \"_prisma_new_Program\"",
+        "sql": "INSERT INTO \"_prisma_new_Program\" (\"archived\", \"description\", \"endDate\", \"id\", \"name\", \"participantCount\", \"siteId\", \"startDate\", \"targetRatio\", \"type\") SELECT \"archived\", \"description\", \"endDate\", \"id\", \"name\", \"participantCount\", \"siteId\", \"startDate\", \"targetRatio\", \"type\" FROM \"Program\""
+      },
+      {
+        "description": "drop old table \"Program\"",
+        "sql": "DROP TABLE \"Program\""
+      },
+      {
+        "description": "rename \"_prisma_new_Program\" to \"Program\"",
+        "sql": "ALTER TABLE \"_prisma_new_Program\" RENAME TO \"Program\""
+      },
+      {
+        "description": "recreate index \"Program_siteId_idx_cabdc5ab\" on \"Program\"",
+        "sql": "CREATE INDEX \"Program_siteId_idx_cabdc5ab\" ON \"Program\" (\"siteId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Program\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "Program"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Program\""
+        }
+      },
+      {
+        "description": "verify temp table \"_prisma_new_Program\" is gone",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "_prisma_new_Program"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "temp table \"_prisma_new_Program\""
+        }
+      },
+      {
+        "description": "verify \"Program\" is stored as the rebuilt table",
+        "sql": "SELECT (SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'Program') = 'CREATE TABLE \"Program\" (\n  \"archived\" INTEGER NOT NULL,\n  \"description\" TEXT NOT NULL,\n  \"endDate\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"name\" TEXT NOT NULL,\n  \"participantCount\" INTEGER NOT NULL,\n  \"siteId\" TEXT NOT NULL,\n  \"startDate\" TEXT NOT NULL,\n  \"targetRatio\" INTEGER,\n  \"type\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  FOREIGN KEY (\"siteId\") REFERENCES \"Site\" (\"id\")\n)'"
+      },
+      {
+        "description": "verify \"targetRatio\" nullability on \"Program\"",
+        "sql": "SELECT COUNT(*) > 0 FROM pragma_table_info('Program') WHERE name = 'targetRatio' AND \"notnull\" = 0"
+      }
+    ]
+  },
+  {
+    "id": "recreateTable.Site",
+    "label": "Recreate table Site",
+    "summary": "Recreates table Site to apply schema changes: database/Site/column:rangeMax; database/Site/column:rangeMin",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "Site"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Site\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "Site"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Site\""
+        }
+      },
+      {
+        "description": "ensure temp table \"_prisma_new_Site\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "_prisma_new_Site"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "temp table \"_prisma_new_Site\""
+        }
+      },
+      {
+        "description": "ensure table \"Site\" has exactly the columns the rebuild copies or leaves out (address, archived, contactEmail, contactName, rangeMax, rangeMin, id, priority, name, orgId, zip)",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('Site')) = 11 AND (SELECT COUNT(*) FROM pragma_table_info('Site') WHERE name IN ('address', 'archived', 'contactEmail', 'contactName', 'rangeMax', 'rangeMin', 'id', 'priority', 'name', 'orgId', 'zip')) = 11"
+      }
+    ],
+    "execute": [
+      {
+        "description": "create new table \"_prisma_new_Site\" with desired schema",
+        "sql": "CREATE TABLE \"_prisma_new_Site\" (\n  \"address\" TEXT NOT NULL,\n  \"archived\" INTEGER NOT NULL,\n  \"contactEmail\" TEXT NOT NULL,\n  \"contactName\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"name\" TEXT NOT NULL,\n  \"orgId\" TEXT NOT NULL,\n  \"priority\" INTEGER NOT NULL,\n  \"rangeMax\" INTEGER,\n  \"rangeMin\" INTEGER,\n  \"zip\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"orgId\", \"name\"),\n  FOREIGN KEY (\"orgId\") REFERENCES \"Organization\" (\"id\")\n)"
+      },
+      {
+        "description": "copy data from \"Site\" to \"_prisma_new_Site\"",
+        "sql": "INSERT INTO \"_prisma_new_Site\" (\"address\", \"archived\", \"contactEmail\", \"contactName\", \"id\", \"name\", \"orgId\", \"priority\", \"rangeMax\", \"rangeMin\", \"zip\") SELECT \"address\", \"archived\", \"contactEmail\", \"contactName\", \"id\", \"name\", \"orgId\", \"priority\", \"rangeMax\", \"rangeMin\", \"zip\" FROM \"Site\""
+      },
+      {
+        "description": "drop old table \"Site\"",
+        "sql": "DROP TABLE \"Site\""
+      },
+      {
+        "description": "rename \"_prisma_new_Site\" to \"Site\"",
+        "sql": "ALTER TABLE \"_prisma_new_Site\" RENAME TO \"Site\""
+      },
+      {
+        "description": "recreate index \"Site_orgId_idx_c5e5aabe\" on \"Site\"",
+        "sql": "CREATE INDEX \"Site_orgId_idx_c5e5aabe\" ON \"Site\" (\"orgId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Site\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "Site"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Site\""
+        }
+      },
+      {
+        "description": "verify temp table \"_prisma_new_Site\" is gone",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "_prisma_new_Site"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "temp table \"_prisma_new_Site\""
+        }
+      },
+      {
+        "description": "verify \"Site\" is stored as the rebuilt table",
+        "sql": "SELECT (SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'Site') = 'CREATE TABLE \"Site\" (\n  \"address\" TEXT NOT NULL,\n  \"archived\" INTEGER NOT NULL,\n  \"contactEmail\" TEXT NOT NULL,\n  \"contactName\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"name\" TEXT NOT NULL,\n  \"orgId\" TEXT NOT NULL,\n  \"priority\" INTEGER NOT NULL,\n  \"rangeMax\" INTEGER,\n  \"rangeMin\" INTEGER,\n  \"zip\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"orgId\", \"name\"),\n  FOREIGN KEY (\"orgId\") REFERENCES \"Organization\" (\"id\")\n)'"
+      },
+      {
+        "description": "verify \"rangeMax\" nullability on \"Site\"",
+        "sql": "SELECT COUNT(*) > 0 FROM pragma_table_info('Site') WHERE name = 'rangeMax' AND \"notnull\" = 0"
+      },
+      {
+        "description": "verify \"rangeMin\" nullability on \"Site\"",
+        "sql": "SELECT COUNT(*) > 0 FROM pragma_table_info('Site') WHERE name = 'rangeMin' AND \"notnull\" = 0"
+      }
+    ]
+  },
+  {
+    "id": "dropColumn.OrgVolunteer.clearanceCompletedAt",
+    "label": "Drop column \"clearanceCompletedAt\" from \"OrgVolunteer\"",
+    "summary": "Drops column clearanceCompletedAt on OrgVolunteer which is not in the contract",
+    "operationClass": "destructive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "clearanceCompletedAt",
+        "table": "OrgVolunteer"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"clearanceCompletedAt\" exists on \"OrgVolunteer\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "OrgVolunteer",
+          "clearanceCompletedAt"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"clearanceCompletedAt\" on \"OrgVolunteer\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop column \"clearanceCompletedAt\" from \"OrgVolunteer\"",
+        "sql": "ALTER TABLE \"OrgVolunteer\" DROP COLUMN \"clearanceCompletedAt\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"clearanceCompletedAt\" is gone from \"OrgVolunteer\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "OrgVolunteer",
+          "clearanceCompletedAt"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"clearanceCompletedAt\" on \"OrgVolunteer\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "dropColumn.OrgVolunteer.trainingCompletedAt",
+    "label": "Drop column \"trainingCompletedAt\" from \"OrgVolunteer\"",
+    "summary": "Drops column trainingCompletedAt on OrgVolunteer which is not in the contract",
+    "operationClass": "destructive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "trainingCompletedAt",
+        "table": "OrgVolunteer"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"trainingCompletedAt\" exists on \"OrgVolunteer\"",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "OrgVolunteer",
+          "trainingCompletedAt"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"trainingCompletedAt\" on \"OrgVolunteer\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "drop column \"trainingCompletedAt\" from \"OrgVolunteer\"",
+        "sql": "ALTER TABLE \"OrgVolunteer\" DROP COLUMN \"trainingCompletedAt\""
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"trainingCompletedAt\" is gone from \"OrgVolunteer\"",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "OrgVolunteer",
+          "trainingCompletedAt"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"trainingCompletedAt\" on \"OrgVolunteer\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "replaceStoredValue.Program.type.SCHOOL_YEAR",
+    "label": "Replace value \"SCHOOL_YEAR\" with \"ONGOING\" in column \"type\" of \"Program\"",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "type",
+        "table": "Program"
+      }
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "replace value \"SCHOOL_YEAR\" with \"ONGOING\" in column \"type\"",
+        "sql": "UPDATE \"Program\" SET \"type\" = ?2 WHERE \"type\" = ?1",
+        "params": [
+          "SCHOOL_YEAR",
+          "ONGOING"
+        ]
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify no row of \"Program\" holds value \"SCHOOL_YEAR\" in column \"type\"",
+        "sql": "SELECT NOT EXISTS (SELECT 1 FROM \"Program\" WHERE \"type\" = ?1) AS result",
+        "params": [
+          "SCHOOL_YEAR"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "replaceStoredValue.Program.type.SUMMER",
+    "label": "Replace value \"SUMMER\" with \"SEASONAL\" in column \"type\" of \"Program\"",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "type",
+        "table": "Program"
+      }
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "replace value \"SUMMER\" with \"SEASONAL\" in column \"type\"",
+        "sql": "UPDATE \"Program\" SET \"type\" = ?2 WHERE \"type\" = ?1",
+        "params": [
+          "SUMMER",
+          "SEASONAL"
+        ]
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify no row of \"Program\" holds value \"SUMMER\" in column \"type\"",
+        "sql": "SELECT NOT EXISTS (SELECT 1 FROM \"Program\" WHERE \"type\" = ?1) AS result",
+        "params": [
+          "SUMMER"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "replaceStoredValue.Session.type.LESSON",
+    "label": "Replace value \"LESSON\" with \"SHIFT\" in column \"type\" of \"Session\"",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "type",
+        "table": "Session"
+      }
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "replace value \"LESSON\" with \"SHIFT\" in column \"type\"",
+        "sql": "UPDATE \"Session\" SET \"type\" = ?2 WHERE \"type\" = ?1",
+        "params": [
+          "LESSON",
+          "SHIFT"
+        ]
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify no row of \"Session\" holds value \"LESSON\" in column \"type\"",
+        "sql": "SELECT NOT EXISTS (SELECT 1 FROM \"Session\" WHERE \"type\" = ?1) AS result",
+        "params": [
+          "LESSON"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "replaceStoredValue.Session.type.COMPETITION",
+    "label": "Replace value \"COMPETITION\" with \"EVENT\" in column \"type\" of \"Session\"",
+    "operationClass": "widening",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "type",
+        "table": "Session"
+      }
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "replace value \"COMPETITION\" with \"EVENT\" in column \"type\"",
+        "sql": "UPDATE \"Session\" SET \"type\" = ?2 WHERE \"type\" = ?1",
+        "params": [
+          "COMPETITION",
+          "EVENT"
+        ]
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify no row of \"Session\" holds value \"COMPETITION\" in column \"type\"",
+        "sql": "SELECT NOT EXISTS (SELECT 1 FROM \"Session\" WHERE \"type\" = ?1) AS result",
+        "params": [
+          "COMPETITION"
+        ]
+      }
+    ]
+  }
+]

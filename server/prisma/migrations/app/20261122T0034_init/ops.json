@@ -1,0 +1,1934 @@
+[
+  {
+    "id": "table.AuthSession",
+    "label": "Create table AuthSession",
+    "summary": "Creates table AuthSession with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "AuthSession"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"AuthSession\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "AuthSession"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"AuthSession\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"AuthSession\"",
+        "sql": "CREATE TABLE \"AuthSession\" (\n  \"createdAt\" TEXT NOT NULL,\n  \"expiresAt\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"tokenHash\" TEXT NOT NULL,\n  \"userId\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"tokenHash\"),\n  FOREIGN KEY (\"userId\") REFERENCES \"User\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"AuthSession\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "AuthSession"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"AuthSession\""
+        }
+      },
+      {
+        "description": "verify table \"AuthSession\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('AuthSession')) = 5 AND (SELECT COUNT(*) FROM pragma_table_info('AuthSession') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('createdAt', 'text', 1, 0), ('expiresAt', 'text', 1, 0), ('id', 'text', 1, 1), ('tokenHash', 'text', 1, 0), ('userId', 'text', 1, 0))) = 5"
+      }
+    ]
+  },
+  {
+    "id": "table.Availability",
+    "label": "Create table Availability",
+    "summary": "Creates table Availability with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "Availability"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Availability\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "Availability"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Availability\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Availability\"",
+        "sql": "CREATE TABLE \"Availability\" (\n  \"dayOfWeek\" INTEGER NOT NULL,\n  \"endTime\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"profileId\" TEXT NOT NULL,\n  \"startTime\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  FOREIGN KEY (\"profileId\") REFERENCES \"VolunteerProfile\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Availability\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "Availability"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Availability\""
+        }
+      },
+      {
+        "description": "verify table \"Availability\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('Availability')) = 5 AND (SELECT COUNT(*) FROM pragma_table_info('Availability') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('dayOfWeek', 'integer', 1, 0), ('endTime', 'text', 1, 0), ('id', 'text', 1, 1), ('profileId', 'text', 1, 0), ('startTime', 'text', 1, 0))) = 5"
+      }
+    ]
+  },
+  {
+    "id": "table.FilterPreset",
+    "label": "Create table FilterPreset",
+    "summary": "Creates table FilterPreset with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "FilterPreset"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"FilterPreset\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "FilterPreset"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"FilterPreset\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"FilterPreset\"",
+        "sql": "CREATE TABLE \"FilterPreset\" (\n  \"filters\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"name\" TEXT NOT NULL,\n  \"userId\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  FOREIGN KEY (\"userId\") REFERENCES \"User\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"FilterPreset\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "FilterPreset"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"FilterPreset\""
+        }
+      },
+      {
+        "description": "verify table \"FilterPreset\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('FilterPreset')) = 4 AND (SELECT COUNT(*) FROM pragma_table_info('FilterPreset') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('filters', 'text', 1, 0), ('id', 'text', 1, 1), ('name', 'text', 1, 0), ('userId', 'text', 1, 0))) = 4"
+      }
+    ]
+  },
+  {
+    "id": "table.HourLog",
+    "label": "Create table HourLog",
+    "summary": "Creates table HourLog with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "HourLog"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"HourLog\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "HourLog"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"HourLog\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"HourLog\"",
+        "sql": "CREATE TABLE \"HourLog\" (\n  \"autoGenerated\" INTEGER NOT NULL,\n  \"date\" TEXT NOT NULL,\n  \"description\" TEXT NOT NULL,\n  \"hours\" REAL NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"orgId\" TEXT NOT NULL,\n  \"reviewNote\" TEXT,\n  \"reviewedBy\" TEXT,\n  \"sessionId\" TEXT,\n  \"status\" TEXT NOT NULL,\n  \"userId\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  FOREIGN KEY (\"userId\") REFERENCES \"User\" (\"id\"),\n  FOREIGN KEY (\"orgId\") REFERENCES \"Organization\" (\"id\"),\n  FOREIGN KEY (\"sessionId\") REFERENCES \"Session\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"HourLog\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "HourLog"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"HourLog\""
+        }
+      },
+      {
+        "description": "verify table \"HourLog\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('HourLog')) = 11 AND (SELECT COUNT(*) FROM pragma_table_info('HourLog') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('autoGenerated', 'integer', 1, 0), ('date', 'text', 1, 0), ('description', 'text', 1, 0), ('hours', 'real', 1, 0), ('id', 'text', 1, 1), ('orgId', 'text', 1, 0), ('reviewNote', 'text', 0, 0), ('reviewedBy', 'text', 0, 0), ('sessionId', 'text', 0, 0), ('status', 'text', 1, 0), ('userId', 'text', 1, 0))) = 11"
+      }
+    ]
+  },
+  {
+    "id": "table.Kit",
+    "label": "Create table Kit",
+    "summary": "Creates table Kit with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "Kit"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Kit\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "Kit"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Kit\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Kit\"",
+        "sql": "CREATE TABLE \"Kit\" (\n  \"assetTag\" TEXT NOT NULL,\n  \"checkedOutAt\" TEXT,\n  \"condition\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"model\" TEXT NOT NULL,\n  \"orgId\" TEXT NOT NULL,\n  \"programId\" TEXT,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"orgId\", \"assetTag\"),\n  FOREIGN KEY (\"orgId\") REFERENCES \"Organization\" (\"id\"),\n  FOREIGN KEY (\"programId\") REFERENCES \"Program\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Kit\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "Kit"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Kit\""
+        }
+      },
+      {
+        "description": "verify table \"Kit\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('Kit')) = 7 AND (SELECT COUNT(*) FROM pragma_table_info('Kit') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('assetTag', 'text', 1, 0), ('checkedOutAt', 'text', 0, 0), ('condition', 'text', 1, 0), ('id', 'text', 1, 1), ('model', 'text', 1, 0), ('orgId', 'text', 1, 0), ('programId', 'text', 0, 0))) = 7"
+      }
+    ]
+  },
+  {
+    "id": "table.Membership",
+    "label": "Create table Membership",
+    "summary": "Creates table Membership with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "Membership"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Membership\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "Membership"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Membership\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Membership\"",
+        "sql": "CREATE TABLE \"Membership\" (\n  \"createdAt\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"orgId\" TEXT NOT NULL,\n  \"orgRole\" TEXT NOT NULL,\n  \"userId\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"orgId\", \"userId\"),\n  FOREIGN KEY (\"orgId\") REFERENCES \"Organization\" (\"id\"),\n  FOREIGN KEY (\"userId\") REFERENCES \"User\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Membership\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "Membership"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Membership\""
+        }
+      },
+      {
+        "description": "verify table \"Membership\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('Membership')) = 5 AND (SELECT COUNT(*) FROM pragma_table_info('Membership') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('createdAt', 'text', 1, 0), ('id', 'text', 1, 1), ('orgId', 'text', 1, 0), ('orgRole', 'text', 1, 0), ('userId', 'text', 1, 0))) = 5"
+      }
+    ]
+  },
+  {
+    "id": "table.OrgVolunteer",
+    "label": "Create table OrgVolunteer",
+    "summary": "Creates table OrgVolunteer with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "OrgVolunteer"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"OrgVolunteer\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "OrgVolunteer"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"OrgVolunteer\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"OrgVolunteer\"",
+        "sql": "CREATE TABLE \"OrgVolunteer\" (\n  \"clearanceCompletedAt\" TEXT,\n  \"createdAt\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"orgId\" TEXT NOT NULL,\n  \"status\" TEXT NOT NULL,\n  \"trainingCompletedAt\" TEXT,\n  \"userId\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"orgId\", \"userId\"),\n  FOREIGN KEY (\"orgId\") REFERENCES \"Organization\" (\"id\"),\n  FOREIGN KEY (\"userId\") REFERENCES \"User\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"OrgVolunteer\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "OrgVolunteer"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"OrgVolunteer\""
+        }
+      },
+      {
+        "description": "verify table \"OrgVolunteer\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('OrgVolunteer')) = 7 AND (SELECT COUNT(*) FROM pragma_table_info('OrgVolunteer') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('clearanceCompletedAt', 'text', 0, 0), ('createdAt', 'text', 1, 0), ('id', 'text', 1, 1), ('orgId', 'text', 1, 0), ('status', 'text', 1, 0), ('trainingCompletedAt', 'text', 0, 0), ('userId', 'text', 1, 0))) = 7"
+      }
+    ]
+  },
+  {
+    "id": "table.Organization",
+    "label": "Create table Organization",
+    "summary": "Creates table Organization with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "Organization"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Organization\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "Organization"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Organization\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Organization\"",
+        "sql": "CREATE TABLE \"Organization\" (\n  \"createdAt\" TEXT NOT NULL,\n  \"description\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"name\" TEXT NOT NULL,\n  \"timezone\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"name\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Organization\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "Organization"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Organization\""
+        }
+      },
+      {
+        "description": "verify table \"Organization\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('Organization')) = 5 AND (SELECT COUNT(*) FROM pragma_table_info('Organization') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('createdAt', 'text', 1, 0), ('description', 'text', 1, 0), ('id', 'text', 1, 1), ('name', 'text', 1, 0), ('timezone', 'text', 1, 0))) = 5"
+      }
+    ]
+  },
+  {
+    "id": "table.Program",
+    "label": "Create table Program",
+    "summary": "Creates table Program with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "Program"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Program\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "Program"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Program\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Program\"",
+        "sql": "CREATE TABLE \"Program\" (\n  \"archived\" INTEGER NOT NULL,\n  \"curriculum\" TEXT NOT NULL,\n  \"endDate\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"name\" TEXT NOT NULL,\n  \"schoolId\" TEXT NOT NULL,\n  \"startDate\" TEXT NOT NULL,\n  \"studentCount\" INTEGER NOT NULL,\n  \"targetRatio\" INTEGER NOT NULL,\n  \"type\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  FOREIGN KEY (\"schoolId\") REFERENCES \"School\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Program\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "Program"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Program\""
+        }
+      },
+      {
+        "description": "verify table \"Program\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('Program')) = 10 AND (SELECT COUNT(*) FROM pragma_table_info('Program') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('archived', 'integer', 1, 0), ('curriculum', 'text', 1, 0), ('endDate', 'text', 1, 0), ('id', 'text', 1, 1), ('name', 'text', 1, 0), ('schoolId', 'text', 1, 0), ('startDate', 'text', 1, 0), ('studentCount', 'integer', 1, 0), ('targetRatio', 'integer', 1, 0), ('type', 'text', 1, 0))) = 10"
+      }
+    ]
+  },
+  {
+    "id": "table.RoleSlot",
+    "label": "Create table RoleSlot",
+    "summary": "Creates table RoleSlot with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "RoleSlot"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"RoleSlot\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "RoleSlot"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"RoleSlot\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"RoleSlot\"",
+        "sql": "CREATE TABLE \"RoleSlot\" (\n  \"id\" TEXT NOT NULL,\n  \"needed\" INTEGER NOT NULL,\n  \"position\" INTEGER NOT NULL,\n  \"role\" TEXT NOT NULL,\n  \"sessionId\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  FOREIGN KEY (\"sessionId\") REFERENCES \"Session\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"RoleSlot\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "RoleSlot"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"RoleSlot\""
+        }
+      },
+      {
+        "description": "verify table \"RoleSlot\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('RoleSlot')) = 5 AND (SELECT COUNT(*) FROM pragma_table_info('RoleSlot') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('id', 'text', 1, 1), ('needed', 'integer', 1, 0), ('position', 'integer', 1, 0), ('role', 'text', 1, 0), ('sessionId', 'text', 1, 0))) = 5"
+      }
+    ]
+  },
+  {
+    "id": "table.School",
+    "label": "Create table School",
+    "summary": "Creates table School with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "School"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"School\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "School"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"School\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"School\"",
+        "sql": "CREATE TABLE \"School\" (\n  \"address\" TEXT NOT NULL,\n  \"archived\" INTEGER NOT NULL,\n  \"contactEmail\" TEXT NOT NULL,\n  \"contactName\" TEXT NOT NULL,\n  \"gradeMax\" INTEGER NOT NULL,\n  \"gradeMin\" INTEGER NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"isTitleI\" INTEGER NOT NULL,\n  \"name\" TEXT NOT NULL,\n  \"orgId\" TEXT NOT NULL,\n  \"zip\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"orgId\", \"name\"),\n  FOREIGN KEY (\"orgId\") REFERENCES \"Organization\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"School\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "School"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"School\""
+        }
+      },
+      {
+        "description": "verify table \"School\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('School')) = 11 AND (SELECT COUNT(*) FROM pragma_table_info('School') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('address', 'text', 1, 0), ('archived', 'integer', 1, 0), ('contactEmail', 'text', 1, 0), ('contactName', 'text', 1, 0), ('gradeMax', 'integer', 1, 0), ('gradeMin', 'integer', 1, 0), ('id', 'text', 1, 1), ('isTitleI', 'integer', 1, 0), ('name', 'text', 1, 0), ('orgId', 'text', 1, 0), ('zip', 'text', 1, 0))) = 11"
+      }
+    ]
+  },
+  {
+    "id": "table.Session",
+    "label": "Create table Session",
+    "summary": "Creates table Session with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "Session"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Session\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "Session"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Session\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Session\"",
+        "sql": "CREATE TABLE \"Session\" (\n  \"date\" TEXT NOT NULL,\n  \"endTime\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"lessonTopic\" TEXT NOT NULL,\n  \"mentorsNeeded\" INTEGER NOT NULL,\n  \"openToGuests\" INTEGER NOT NULL,\n  \"programId\" TEXT NOT NULL,\n  \"startTime\" TEXT NOT NULL,\n  \"status\" TEXT NOT NULL,\n  \"type\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  FOREIGN KEY (\"programId\") REFERENCES \"Program\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Session\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "Session"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Session\""
+        }
+      },
+      {
+        "description": "verify table \"Session\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('Session')) = 10 AND (SELECT COUNT(*) FROM pragma_table_info('Session') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('date', 'text', 1, 0), ('endTime', 'text', 1, 0), ('id', 'text', 1, 1), ('lessonTopic', 'text', 1, 0), ('mentorsNeeded', 'integer', 1, 0), ('openToGuests', 'integer', 1, 0), ('programId', 'text', 1, 0), ('startTime', 'text', 1, 0), ('status', 'text', 1, 0), ('type', 'text', 1, 0))) = 10"
+      }
+    ]
+  },
+  {
+    "id": "table.SessionSkill",
+    "label": "Create table SessionSkill",
+    "summary": "Creates table SessionSkill with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "SessionSkill"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"SessionSkill\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "SessionSkill"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"SessionSkill\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"SessionSkill\"",
+        "sql": "CREATE TABLE \"SessionSkill\" (\n  \"sessionId\" TEXT NOT NULL,\n  \"skillId\" TEXT NOT NULL,\n  PRIMARY KEY (\"sessionId\", \"skillId\"),\n  FOREIGN KEY (\"sessionId\") REFERENCES \"Session\" (\"id\"),\n  FOREIGN KEY (\"skillId\") REFERENCES \"Skill\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"SessionSkill\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "SessionSkill"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"SessionSkill\""
+        }
+      },
+      {
+        "description": "verify table \"SessionSkill\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('SessionSkill')) = 2 AND (SELECT COUNT(*) FROM pragma_table_info('SessionSkill') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('sessionId', 'text', 1, 1), ('skillId', 'text', 1, 2))) = 2"
+      }
+    ]
+  },
+  {
+    "id": "table.SignUp",
+    "label": "Create table SignUp",
+    "summary": "Creates table SignUp with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "SignUp"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"SignUp\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "SignUp"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"SignUp\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"SignUp\"",
+        "sql": "CREATE TABLE \"SignUp\" (\n  \"checkInAt\" TEXT,\n  \"checkOutAt\" TEXT,\n  \"createdAt\" TEXT NOT NULL,\n  \"guest\" INTEGER NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"role\" TEXT NOT NULL,\n  \"sessionId\" TEXT NOT NULL,\n  \"status\" TEXT NOT NULL,\n  \"userId\" TEXT NOT NULL,\n  \"waitlistPosition\" INTEGER,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"sessionId\", \"userId\"),\n  FOREIGN KEY (\"sessionId\") REFERENCES \"Session\" (\"id\"),\n  FOREIGN KEY (\"userId\") REFERENCES \"User\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"SignUp\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "SignUp"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"SignUp\""
+        }
+      },
+      {
+        "description": "verify table \"SignUp\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('SignUp')) = 10 AND (SELECT COUNT(*) FROM pragma_table_info('SignUp') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('checkInAt', 'text', 0, 0), ('checkOutAt', 'text', 0, 0), ('createdAt', 'text', 1, 0), ('guest', 'integer', 1, 0), ('id', 'text', 1, 1), ('role', 'text', 1, 0), ('sessionId', 'text', 1, 0), ('status', 'text', 1, 0), ('userId', 'text', 1, 0), ('waitlistPosition', 'integer', 0, 0))) = 10"
+      }
+    ]
+  },
+  {
+    "id": "table.Skill",
+    "label": "Create table Skill",
+    "summary": "Creates table Skill with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "Skill"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Skill\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "Skill"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Skill\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Skill\"",
+        "sql": "CREATE TABLE \"Skill\" (\n  \"id\" TEXT NOT NULL,\n  \"name\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"name\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Skill\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "Skill"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Skill\""
+        }
+      },
+      {
+        "description": "verify table \"Skill\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('Skill')) = 2 AND (SELECT COUNT(*) FROM pragma_table_info('Skill') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('id', 'text', 1, 1), ('name', 'text', 1, 0))) = 2"
+      }
+    ]
+  },
+  {
+    "id": "table.StatusChange",
+    "label": "Create table StatusChange",
+    "summary": "Creates table StatusChange with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "StatusChange"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"StatusChange\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "StatusChange"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"StatusChange\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"StatusChange\"",
+        "sql": "CREATE TABLE \"StatusChange\" (\n  \"changedAt\" TEXT NOT NULL,\n  \"changedBy\" TEXT NOT NULL,\n  \"fromStatus\" TEXT,\n  \"id\" TEXT NOT NULL,\n  \"note\" TEXT,\n  \"orgVolunteerId\" TEXT NOT NULL,\n  \"toStatus\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  FOREIGN KEY (\"orgVolunteerId\") REFERENCES \"OrgVolunteer\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"StatusChange\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "StatusChange"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"StatusChange\""
+        }
+      },
+      {
+        "description": "verify table \"StatusChange\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('StatusChange')) = 7 AND (SELECT COUNT(*) FROM pragma_table_info('StatusChange') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('changedAt', 'text', 1, 0), ('changedBy', 'text', 1, 0), ('fromStatus', 'text', 0, 0), ('id', 'text', 1, 1), ('note', 'text', 0, 0), ('orgVolunteerId', 'text', 1, 0), ('toStatus', 'text', 1, 0))) = 7"
+      }
+    ]
+  },
+  {
+    "id": "table.User",
+    "label": "Create table User",
+    "summary": "Creates table User with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "User"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"User\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "User"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"User\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"User\"",
+        "sql": "CREATE TABLE \"User\" (\n  \"createdAt\" TEXT NOT NULL,\n  \"email\" TEXT NOT NULL,\n  \"firstName\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"lastName\" TEXT NOT NULL,\n  \"passwordHash\" TEXT NOT NULL,\n  \"phone\" TEXT,\n  \"tourCompleted\" INTEGER NOT NULL,\n  \"zip\" TEXT,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"email\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"User\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "User"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"User\""
+        }
+      },
+      {
+        "description": "verify table \"User\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('User')) = 9 AND (SELECT COUNT(*) FROM pragma_table_info('User') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('createdAt', 'text', 1, 0), ('email', 'text', 1, 0), ('firstName', 'text', 1, 0), ('id', 'text', 1, 1), ('lastName', 'text', 1, 0), ('passwordHash', 'text', 1, 0), ('phone', 'text', 0, 0), ('tourCompleted', 'integer', 1, 0), ('zip', 'text', 0, 0))) = 9"
+      }
+    ]
+  },
+  {
+    "id": "table.VolunteerProfile",
+    "label": "Create table VolunteerProfile",
+    "summary": "Creates table VolunteerProfile with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "VolunteerProfile"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"VolunteerProfile\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "VolunteerProfile"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"VolunteerProfile\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"VolunteerProfile\"",
+        "sql": "CREATE TABLE \"VolunteerProfile\" (\n  \"affiliation\" TEXT NOT NULL,\n  \"bio\" TEXT,\n  \"experienceLevel\" TEXT NOT NULL,\n  \"hasTransportation\" INTEGER NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"userId\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"userId\"),\n  FOREIGN KEY (\"userId\") REFERENCES \"User\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"VolunteerProfile\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "VolunteerProfile"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"VolunteerProfile\""
+        }
+      },
+      {
+        "description": "verify table \"VolunteerProfile\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('VolunteerProfile')) = 6 AND (SELECT COUNT(*) FROM pragma_table_info('VolunteerProfile') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('affiliation', 'text', 1, 0), ('bio', 'text', 0, 0), ('experienceLevel', 'text', 1, 0), ('hasTransportation', 'integer', 1, 0), ('id', 'text', 1, 1), ('userId', 'text', 1, 0))) = 6"
+      }
+    ]
+  },
+  {
+    "id": "table.VolunteerSkill",
+    "label": "Create table VolunteerSkill",
+    "summary": "Creates table VolunteerSkill with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "VolunteerSkill"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"VolunteerSkill\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "VolunteerSkill"],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"VolunteerSkill\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"VolunteerSkill\"",
+        "sql": "CREATE TABLE \"VolunteerSkill\" (\n  \"profileId\" TEXT NOT NULL,\n  \"skillId\" TEXT NOT NULL,\n  PRIMARY KEY (\"profileId\", \"skillId\"),\n  FOREIGN KEY (\"profileId\") REFERENCES \"VolunteerProfile\" (\"id\"),\n  FOREIGN KEY (\"skillId\") REFERENCES \"Skill\" (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"VolunteerSkill\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["table", "VolunteerSkill"],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"VolunteerSkill\""
+        }
+      },
+      {
+        "description": "verify table \"VolunteerSkill\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('VolunteerSkill')) = 2 AND (SELECT COUNT(*) FROM pragma_table_info('VolunteerSkill') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('profileId', 'text', 1, 1), ('skillId', 'text', 1, 2))) = 2"
+      }
+    ]
+  },
+  {
+    "id": "index.AuthSession.AuthSession_userId_idx_a489d58a",
+    "label": "Create index AuthSession_userId_idx_a489d58a on AuthSession",
+    "summary": "Creates index AuthSession_userId_idx_a489d58a on AuthSession",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "AuthSession_userId_idx_a489d58a",
+        "table": "AuthSession"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"AuthSession_userId_idx_a489d58a\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "AuthSession_userId_idx_a489d58a"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"AuthSession_userId_idx_a489d58a\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"AuthSession_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"AuthSession_userId_idx_a489d58a\" ON \"AuthSession\" (\"userId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"AuthSession_userId_idx_a489d58a\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "AuthSession_userId_idx_a489d58a"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"AuthSession_userId_idx_a489d58a\""
+        }
+      },
+      {
+        "description": "verify index \"AuthSession_userId_idx_a489d58a\" on \"AuthSession\" covers (userId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('AuthSession') WHERE name = 'AuthSession_userId_idx_a489d58a' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('AuthSession_userId_idx_a489d58a')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('AuthSession_userId_idx_a489d58a') WHERE (seqno, name) IN (VALUES (0, 'userId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.Availability.Availability_profileId_idx_d9cdfcaf",
+    "label": "Create index Availability_profileId_idx_d9cdfcaf on Availability",
+    "summary": "Creates index Availability_profileId_idx_d9cdfcaf on Availability",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "Availability_profileId_idx_d9cdfcaf",
+        "table": "Availability"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Availability_profileId_idx_d9cdfcaf\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "Availability_profileId_idx_d9cdfcaf"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Availability_profileId_idx_d9cdfcaf\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Availability_profileId_idx_d9cdfcaf\"",
+        "sql": "CREATE INDEX \"Availability_profileId_idx_d9cdfcaf\" ON \"Availability\" (\"profileId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Availability_profileId_idx_d9cdfcaf\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "Availability_profileId_idx_d9cdfcaf"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"Availability_profileId_idx_d9cdfcaf\""
+        }
+      },
+      {
+        "description": "verify index \"Availability_profileId_idx_d9cdfcaf\" on \"Availability\" covers (profileId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('Availability') WHERE name = 'Availability_profileId_idx_d9cdfcaf' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('Availability_profileId_idx_d9cdfcaf')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('Availability_profileId_idx_d9cdfcaf') WHERE (seqno, name) IN (VALUES (0, 'profileId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.FilterPreset.FilterPreset_userId_idx_a489d58a",
+    "label": "Create index FilterPreset_userId_idx_a489d58a on FilterPreset",
+    "summary": "Creates index FilterPreset_userId_idx_a489d58a on FilterPreset",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "FilterPreset_userId_idx_a489d58a",
+        "table": "FilterPreset"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"FilterPreset_userId_idx_a489d58a\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "FilterPreset_userId_idx_a489d58a"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"FilterPreset_userId_idx_a489d58a\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"FilterPreset_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"FilterPreset_userId_idx_a489d58a\" ON \"FilterPreset\" (\"userId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"FilterPreset_userId_idx_a489d58a\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "FilterPreset_userId_idx_a489d58a"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"FilterPreset_userId_idx_a489d58a\""
+        }
+      },
+      {
+        "description": "verify index \"FilterPreset_userId_idx_a489d58a\" on \"FilterPreset\" covers (userId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('FilterPreset') WHERE name = 'FilterPreset_userId_idx_a489d58a' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('FilterPreset_userId_idx_a489d58a')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('FilterPreset_userId_idx_a489d58a') WHERE (seqno, name) IN (VALUES (0, 'userId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.HourLog.HourLog_orgId_idx_c5e5aabe",
+    "label": "Create index HourLog_orgId_idx_c5e5aabe on HourLog",
+    "summary": "Creates index HourLog_orgId_idx_c5e5aabe on HourLog",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "HourLog_orgId_idx_c5e5aabe",
+        "table": "HourLog"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"HourLog_orgId_idx_c5e5aabe\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "HourLog_orgId_idx_c5e5aabe"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"HourLog_orgId_idx_c5e5aabe\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"HourLog_orgId_idx_c5e5aabe\"",
+        "sql": "CREATE INDEX \"HourLog_orgId_idx_c5e5aabe\" ON \"HourLog\" (\"orgId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"HourLog_orgId_idx_c5e5aabe\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "HourLog_orgId_idx_c5e5aabe"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"HourLog_orgId_idx_c5e5aabe\""
+        }
+      },
+      {
+        "description": "verify index \"HourLog_orgId_idx_c5e5aabe\" on \"HourLog\" covers (orgId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('HourLog') WHERE name = 'HourLog_orgId_idx_c5e5aabe' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('HourLog_orgId_idx_c5e5aabe')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('HourLog_orgId_idx_c5e5aabe') WHERE (seqno, name) IN (VALUES (0, 'orgId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.HourLog.HourLog_sessionId_idx_29f415d4",
+    "label": "Create index HourLog_sessionId_idx_29f415d4 on HourLog",
+    "summary": "Creates index HourLog_sessionId_idx_29f415d4 on HourLog",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "HourLog_sessionId_idx_29f415d4",
+        "table": "HourLog"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"HourLog_sessionId_idx_29f415d4\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "HourLog_sessionId_idx_29f415d4"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"HourLog_sessionId_idx_29f415d4\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"HourLog_sessionId_idx_29f415d4\"",
+        "sql": "CREATE INDEX \"HourLog_sessionId_idx_29f415d4\" ON \"HourLog\" (\"sessionId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"HourLog_sessionId_idx_29f415d4\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "HourLog_sessionId_idx_29f415d4"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"HourLog_sessionId_idx_29f415d4\""
+        }
+      },
+      {
+        "description": "verify index \"HourLog_sessionId_idx_29f415d4\" on \"HourLog\" covers (sessionId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('HourLog') WHERE name = 'HourLog_sessionId_idx_29f415d4' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('HourLog_sessionId_idx_29f415d4')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('HourLog_sessionId_idx_29f415d4') WHERE (seqno, name) IN (VALUES (0, 'sessionId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.HourLog.HourLog_userId_idx_a489d58a",
+    "label": "Create index HourLog_userId_idx_a489d58a on HourLog",
+    "summary": "Creates index HourLog_userId_idx_a489d58a on HourLog",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "HourLog_userId_idx_a489d58a",
+        "table": "HourLog"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"HourLog_userId_idx_a489d58a\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "HourLog_userId_idx_a489d58a"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"HourLog_userId_idx_a489d58a\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"HourLog_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"HourLog_userId_idx_a489d58a\" ON \"HourLog\" (\"userId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"HourLog_userId_idx_a489d58a\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "HourLog_userId_idx_a489d58a"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"HourLog_userId_idx_a489d58a\""
+        }
+      },
+      {
+        "description": "verify index \"HourLog_userId_idx_a489d58a\" on \"HourLog\" covers (userId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('HourLog') WHERE name = 'HourLog_userId_idx_a489d58a' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('HourLog_userId_idx_a489d58a')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('HourLog_userId_idx_a489d58a') WHERE (seqno, name) IN (VALUES (0, 'userId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.Kit.Kit_orgId_idx_c5e5aabe",
+    "label": "Create index Kit_orgId_idx_c5e5aabe on Kit",
+    "summary": "Creates index Kit_orgId_idx_c5e5aabe on Kit",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "Kit_orgId_idx_c5e5aabe",
+        "table": "Kit"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Kit_orgId_idx_c5e5aabe\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "Kit_orgId_idx_c5e5aabe"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Kit_orgId_idx_c5e5aabe\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Kit_orgId_idx_c5e5aabe\"",
+        "sql": "CREATE INDEX \"Kit_orgId_idx_c5e5aabe\" ON \"Kit\" (\"orgId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Kit_orgId_idx_c5e5aabe\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "Kit_orgId_idx_c5e5aabe"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"Kit_orgId_idx_c5e5aabe\""
+        }
+      },
+      {
+        "description": "verify index \"Kit_orgId_idx_c5e5aabe\" on \"Kit\" covers (orgId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('Kit') WHERE name = 'Kit_orgId_idx_c5e5aabe' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('Kit_orgId_idx_c5e5aabe')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('Kit_orgId_idx_c5e5aabe') WHERE (seqno, name) IN (VALUES (0, 'orgId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.Kit.Kit_programId_idx_4e50c706",
+    "label": "Create index Kit_programId_idx_4e50c706 on Kit",
+    "summary": "Creates index Kit_programId_idx_4e50c706 on Kit",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "Kit_programId_idx_4e50c706",
+        "table": "Kit"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Kit_programId_idx_4e50c706\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "Kit_programId_idx_4e50c706"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Kit_programId_idx_4e50c706\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Kit_programId_idx_4e50c706\"",
+        "sql": "CREATE INDEX \"Kit_programId_idx_4e50c706\" ON \"Kit\" (\"programId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Kit_programId_idx_4e50c706\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "Kit_programId_idx_4e50c706"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"Kit_programId_idx_4e50c706\""
+        }
+      },
+      {
+        "description": "verify index \"Kit_programId_idx_4e50c706\" on \"Kit\" covers (programId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('Kit') WHERE name = 'Kit_programId_idx_4e50c706' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('Kit_programId_idx_4e50c706')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('Kit_programId_idx_4e50c706') WHERE (seqno, name) IN (VALUES (0, 'programId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.Membership.Membership_orgId_idx_c5e5aabe",
+    "label": "Create index Membership_orgId_idx_c5e5aabe on Membership",
+    "summary": "Creates index Membership_orgId_idx_c5e5aabe on Membership",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "Membership_orgId_idx_c5e5aabe",
+        "table": "Membership"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Membership_orgId_idx_c5e5aabe\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "Membership_orgId_idx_c5e5aabe"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Membership_orgId_idx_c5e5aabe\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Membership_orgId_idx_c5e5aabe\"",
+        "sql": "CREATE INDEX \"Membership_orgId_idx_c5e5aabe\" ON \"Membership\" (\"orgId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Membership_orgId_idx_c5e5aabe\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "Membership_orgId_idx_c5e5aabe"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"Membership_orgId_idx_c5e5aabe\""
+        }
+      },
+      {
+        "description": "verify index \"Membership_orgId_idx_c5e5aabe\" on \"Membership\" covers (orgId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('Membership') WHERE name = 'Membership_orgId_idx_c5e5aabe' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('Membership_orgId_idx_c5e5aabe')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('Membership_orgId_idx_c5e5aabe') WHERE (seqno, name) IN (VALUES (0, 'orgId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.Membership.Membership_userId_idx_a489d58a",
+    "label": "Create index Membership_userId_idx_a489d58a on Membership",
+    "summary": "Creates index Membership_userId_idx_a489d58a on Membership",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "Membership_userId_idx_a489d58a",
+        "table": "Membership"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Membership_userId_idx_a489d58a\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "Membership_userId_idx_a489d58a"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Membership_userId_idx_a489d58a\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Membership_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"Membership_userId_idx_a489d58a\" ON \"Membership\" (\"userId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Membership_userId_idx_a489d58a\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "Membership_userId_idx_a489d58a"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"Membership_userId_idx_a489d58a\""
+        }
+      },
+      {
+        "description": "verify index \"Membership_userId_idx_a489d58a\" on \"Membership\" covers (userId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('Membership') WHERE name = 'Membership_userId_idx_a489d58a' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('Membership_userId_idx_a489d58a')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('Membership_userId_idx_a489d58a') WHERE (seqno, name) IN (VALUES (0, 'userId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.OrgVolunteer.OrgVolunteer_orgId_idx_c5e5aabe",
+    "label": "Create index OrgVolunteer_orgId_idx_c5e5aabe on OrgVolunteer",
+    "summary": "Creates index OrgVolunteer_orgId_idx_c5e5aabe on OrgVolunteer",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "OrgVolunteer_orgId_idx_c5e5aabe",
+        "table": "OrgVolunteer"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"OrgVolunteer_orgId_idx_c5e5aabe\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "OrgVolunteer_orgId_idx_c5e5aabe"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"OrgVolunteer_orgId_idx_c5e5aabe\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"OrgVolunteer_orgId_idx_c5e5aabe\"",
+        "sql": "CREATE INDEX \"OrgVolunteer_orgId_idx_c5e5aabe\" ON \"OrgVolunteer\" (\"orgId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"OrgVolunteer_orgId_idx_c5e5aabe\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "OrgVolunteer_orgId_idx_c5e5aabe"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"OrgVolunteer_orgId_idx_c5e5aabe\""
+        }
+      },
+      {
+        "description": "verify index \"OrgVolunteer_orgId_idx_c5e5aabe\" on \"OrgVolunteer\" covers (orgId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('OrgVolunteer') WHERE name = 'OrgVolunteer_orgId_idx_c5e5aabe' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('OrgVolunteer_orgId_idx_c5e5aabe')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('OrgVolunteer_orgId_idx_c5e5aabe') WHERE (seqno, name) IN (VALUES (0, 'orgId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.OrgVolunteer.OrgVolunteer_userId_idx_a489d58a",
+    "label": "Create index OrgVolunteer_userId_idx_a489d58a on OrgVolunteer",
+    "summary": "Creates index OrgVolunteer_userId_idx_a489d58a on OrgVolunteer",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "OrgVolunteer_userId_idx_a489d58a",
+        "table": "OrgVolunteer"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"OrgVolunteer_userId_idx_a489d58a\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "OrgVolunteer_userId_idx_a489d58a"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"OrgVolunteer_userId_idx_a489d58a\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"OrgVolunteer_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"OrgVolunteer_userId_idx_a489d58a\" ON \"OrgVolunteer\" (\"userId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"OrgVolunteer_userId_idx_a489d58a\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "OrgVolunteer_userId_idx_a489d58a"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"OrgVolunteer_userId_idx_a489d58a\""
+        }
+      },
+      {
+        "description": "verify index \"OrgVolunteer_userId_idx_a489d58a\" on \"OrgVolunteer\" covers (userId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('OrgVolunteer') WHERE name = 'OrgVolunteer_userId_idx_a489d58a' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('OrgVolunteer_userId_idx_a489d58a')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('OrgVolunteer_userId_idx_a489d58a') WHERE (seqno, name) IN (VALUES (0, 'userId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.Program.Program_schoolId_idx_82b454d7",
+    "label": "Create index Program_schoolId_idx_82b454d7 on Program",
+    "summary": "Creates index Program_schoolId_idx_82b454d7 on Program",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "Program_schoolId_idx_82b454d7",
+        "table": "Program"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Program_schoolId_idx_82b454d7\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "Program_schoolId_idx_82b454d7"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Program_schoolId_idx_82b454d7\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Program_schoolId_idx_82b454d7\"",
+        "sql": "CREATE INDEX \"Program_schoolId_idx_82b454d7\" ON \"Program\" (\"schoolId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Program_schoolId_idx_82b454d7\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "Program_schoolId_idx_82b454d7"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"Program_schoolId_idx_82b454d7\""
+        }
+      },
+      {
+        "description": "verify index \"Program_schoolId_idx_82b454d7\" on \"Program\" covers (schoolId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('Program') WHERE name = 'Program_schoolId_idx_82b454d7' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('Program_schoolId_idx_82b454d7')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('Program_schoolId_idx_82b454d7') WHERE (seqno, name) IN (VALUES (0, 'schoolId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.RoleSlot.RoleSlot_sessionId_idx_29f415d4",
+    "label": "Create index RoleSlot_sessionId_idx_29f415d4 on RoleSlot",
+    "summary": "Creates index RoleSlot_sessionId_idx_29f415d4 on RoleSlot",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "RoleSlot_sessionId_idx_29f415d4",
+        "table": "RoleSlot"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"RoleSlot_sessionId_idx_29f415d4\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "RoleSlot_sessionId_idx_29f415d4"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"RoleSlot_sessionId_idx_29f415d4\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"RoleSlot_sessionId_idx_29f415d4\"",
+        "sql": "CREATE INDEX \"RoleSlot_sessionId_idx_29f415d4\" ON \"RoleSlot\" (\"sessionId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"RoleSlot_sessionId_idx_29f415d4\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "RoleSlot_sessionId_idx_29f415d4"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"RoleSlot_sessionId_idx_29f415d4\""
+        }
+      },
+      {
+        "description": "verify index \"RoleSlot_sessionId_idx_29f415d4\" on \"RoleSlot\" covers (sessionId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('RoleSlot') WHERE name = 'RoleSlot_sessionId_idx_29f415d4' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('RoleSlot_sessionId_idx_29f415d4')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('RoleSlot_sessionId_idx_29f415d4') WHERE (seqno, name) IN (VALUES (0, 'sessionId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.School.School_orgId_idx_c5e5aabe",
+    "label": "Create index School_orgId_idx_c5e5aabe on School",
+    "summary": "Creates index School_orgId_idx_c5e5aabe on School",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "School_orgId_idx_c5e5aabe",
+        "table": "School"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"School_orgId_idx_c5e5aabe\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "School_orgId_idx_c5e5aabe"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"School_orgId_idx_c5e5aabe\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"School_orgId_idx_c5e5aabe\"",
+        "sql": "CREATE INDEX \"School_orgId_idx_c5e5aabe\" ON \"School\" (\"orgId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"School_orgId_idx_c5e5aabe\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "School_orgId_idx_c5e5aabe"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"School_orgId_idx_c5e5aabe\""
+        }
+      },
+      {
+        "description": "verify index \"School_orgId_idx_c5e5aabe\" on \"School\" covers (orgId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('School') WHERE name = 'School_orgId_idx_c5e5aabe' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('School_orgId_idx_c5e5aabe')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('School_orgId_idx_c5e5aabe') WHERE (seqno, name) IN (VALUES (0, 'orgId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.Session.Session_programId_idx_4e50c706",
+    "label": "Create index Session_programId_idx_4e50c706 on Session",
+    "summary": "Creates index Session_programId_idx_4e50c706 on Session",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "Session_programId_idx_4e50c706",
+        "table": "Session"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Session_programId_idx_4e50c706\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "Session_programId_idx_4e50c706"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Session_programId_idx_4e50c706\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Session_programId_idx_4e50c706\"",
+        "sql": "CREATE INDEX \"Session_programId_idx_4e50c706\" ON \"Session\" (\"programId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Session_programId_idx_4e50c706\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "Session_programId_idx_4e50c706"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"Session_programId_idx_4e50c706\""
+        }
+      },
+      {
+        "description": "verify index \"Session_programId_idx_4e50c706\" on \"Session\" covers (programId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('Session') WHERE name = 'Session_programId_idx_4e50c706' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('Session_programId_idx_4e50c706')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('Session_programId_idx_4e50c706') WHERE (seqno, name) IN (VALUES (0, 'programId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.SessionSkill.SessionSkill_sessionId_idx_29f415d4",
+    "label": "Create index SessionSkill_sessionId_idx_29f415d4 on SessionSkill",
+    "summary": "Creates index SessionSkill_sessionId_idx_29f415d4 on SessionSkill",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "SessionSkill_sessionId_idx_29f415d4",
+        "table": "SessionSkill"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SessionSkill_sessionId_idx_29f415d4\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "SessionSkill_sessionId_idx_29f415d4"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"SessionSkill_sessionId_idx_29f415d4\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SessionSkill_sessionId_idx_29f415d4\"",
+        "sql": "CREATE INDEX \"SessionSkill_sessionId_idx_29f415d4\" ON \"SessionSkill\" (\"sessionId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SessionSkill_sessionId_idx_29f415d4\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "SessionSkill_sessionId_idx_29f415d4"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"SessionSkill_sessionId_idx_29f415d4\""
+        }
+      },
+      {
+        "description": "verify index \"SessionSkill_sessionId_idx_29f415d4\" on \"SessionSkill\" covers (sessionId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('SessionSkill') WHERE name = 'SessionSkill_sessionId_idx_29f415d4' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('SessionSkill_sessionId_idx_29f415d4')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('SessionSkill_sessionId_idx_29f415d4') WHERE (seqno, name) IN (VALUES (0, 'sessionId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.SessionSkill.SessionSkill_skillId_idx_6e19993d",
+    "label": "Create index SessionSkill_skillId_idx_6e19993d on SessionSkill",
+    "summary": "Creates index SessionSkill_skillId_idx_6e19993d on SessionSkill",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "SessionSkill_skillId_idx_6e19993d",
+        "table": "SessionSkill"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SessionSkill_skillId_idx_6e19993d\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "SessionSkill_skillId_idx_6e19993d"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"SessionSkill_skillId_idx_6e19993d\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SessionSkill_skillId_idx_6e19993d\"",
+        "sql": "CREATE INDEX \"SessionSkill_skillId_idx_6e19993d\" ON \"SessionSkill\" (\"skillId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SessionSkill_skillId_idx_6e19993d\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "SessionSkill_skillId_idx_6e19993d"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"SessionSkill_skillId_idx_6e19993d\""
+        }
+      },
+      {
+        "description": "verify index \"SessionSkill_skillId_idx_6e19993d\" on \"SessionSkill\" covers (skillId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('SessionSkill') WHERE name = 'SessionSkill_skillId_idx_6e19993d' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('SessionSkill_skillId_idx_6e19993d')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('SessionSkill_skillId_idx_6e19993d') WHERE (seqno, name) IN (VALUES (0, 'skillId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.SignUp.SignUp_sessionId_idx_29f415d4",
+    "label": "Create index SignUp_sessionId_idx_29f415d4 on SignUp",
+    "summary": "Creates index SignUp_sessionId_idx_29f415d4 on SignUp",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "SignUp_sessionId_idx_29f415d4",
+        "table": "SignUp"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SignUp_sessionId_idx_29f415d4\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "SignUp_sessionId_idx_29f415d4"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"SignUp_sessionId_idx_29f415d4\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SignUp_sessionId_idx_29f415d4\"",
+        "sql": "CREATE INDEX \"SignUp_sessionId_idx_29f415d4\" ON \"SignUp\" (\"sessionId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SignUp_sessionId_idx_29f415d4\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "SignUp_sessionId_idx_29f415d4"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"SignUp_sessionId_idx_29f415d4\""
+        }
+      },
+      {
+        "description": "verify index \"SignUp_sessionId_idx_29f415d4\" on \"SignUp\" covers (sessionId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('SignUp') WHERE name = 'SignUp_sessionId_idx_29f415d4' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('SignUp_sessionId_idx_29f415d4')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('SignUp_sessionId_idx_29f415d4') WHERE (seqno, name) IN (VALUES (0, 'sessionId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.SignUp.SignUp_userId_idx_a489d58a",
+    "label": "Create index SignUp_userId_idx_a489d58a on SignUp",
+    "summary": "Creates index SignUp_userId_idx_a489d58a on SignUp",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "SignUp_userId_idx_a489d58a",
+        "table": "SignUp"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"SignUp_userId_idx_a489d58a\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "SignUp_userId_idx_a489d58a"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"SignUp_userId_idx_a489d58a\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"SignUp_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"SignUp_userId_idx_a489d58a\" ON \"SignUp\" (\"userId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"SignUp_userId_idx_a489d58a\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "SignUp_userId_idx_a489d58a"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"SignUp_userId_idx_a489d58a\""
+        }
+      },
+      {
+        "description": "verify index \"SignUp_userId_idx_a489d58a\" on \"SignUp\" covers (userId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('SignUp') WHERE name = 'SignUp_userId_idx_a489d58a' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('SignUp_userId_idx_a489d58a')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('SignUp_userId_idx_a489d58a') WHERE (seqno, name) IN (VALUES (0, 'userId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.StatusChange.StatusChange_orgVolunteerId_idx_1aee60fd",
+    "label": "Create index StatusChange_orgVolunteerId_idx_1aee60fd on StatusChange",
+    "summary": "Creates index StatusChange_orgVolunteerId_idx_1aee60fd on StatusChange",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "StatusChange_orgVolunteerId_idx_1aee60fd",
+        "table": "StatusChange"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"StatusChange_orgVolunteerId_idx_1aee60fd\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "StatusChange_orgVolunteerId_idx_1aee60fd"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"StatusChange_orgVolunteerId_idx_1aee60fd\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"StatusChange_orgVolunteerId_idx_1aee60fd\"",
+        "sql": "CREATE INDEX \"StatusChange_orgVolunteerId_idx_1aee60fd\" ON \"StatusChange\" (\"orgVolunteerId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"StatusChange_orgVolunteerId_idx_1aee60fd\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "StatusChange_orgVolunteerId_idx_1aee60fd"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"StatusChange_orgVolunteerId_idx_1aee60fd\""
+        }
+      },
+      {
+        "description": "verify index \"StatusChange_orgVolunteerId_idx_1aee60fd\" on \"StatusChange\" covers (orgVolunteerId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('StatusChange') WHERE name = 'StatusChange_orgVolunteerId_idx_1aee60fd' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('StatusChange_orgVolunteerId_idx_1aee60fd')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('StatusChange_orgVolunteerId_idx_1aee60fd') WHERE (seqno, name) IN (VALUES (0, 'orgVolunteerId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.VolunteerSkill.VolunteerSkill_profileId_idx_d9cdfcaf",
+    "label": "Create index VolunteerSkill_profileId_idx_d9cdfcaf on VolunteerSkill",
+    "summary": "Creates index VolunteerSkill_profileId_idx_d9cdfcaf on VolunteerSkill",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "VolunteerSkill_profileId_idx_d9cdfcaf",
+        "table": "VolunteerSkill"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"VolunteerSkill_profileId_idx_d9cdfcaf\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "VolunteerSkill_profileId_idx_d9cdfcaf"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"VolunteerSkill_profileId_idx_d9cdfcaf\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"VolunteerSkill_profileId_idx_d9cdfcaf\"",
+        "sql": "CREATE INDEX \"VolunteerSkill_profileId_idx_d9cdfcaf\" ON \"VolunteerSkill\" (\"profileId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"VolunteerSkill_profileId_idx_d9cdfcaf\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "VolunteerSkill_profileId_idx_d9cdfcaf"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"VolunteerSkill_profileId_idx_d9cdfcaf\""
+        }
+      },
+      {
+        "description": "verify index \"VolunteerSkill_profileId_idx_d9cdfcaf\" on \"VolunteerSkill\" covers (profileId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('VolunteerSkill') WHERE name = 'VolunteerSkill_profileId_idx_d9cdfcaf' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('VolunteerSkill_profileId_idx_d9cdfcaf')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('VolunteerSkill_profileId_idx_d9cdfcaf') WHERE (seqno, name) IN (VALUES (0, 'profileId'))) = 1"
+      }
+    ]
+  },
+  {
+    "id": "index.VolunteerSkill.VolunteerSkill_skillId_idx_6e19993d",
+    "label": "Create index VolunteerSkill_skillId_idx_6e19993d on VolunteerSkill",
+    "summary": "Creates index VolunteerSkill_skillId_idx_6e19993d on VolunteerSkill",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "index",
+        "name": "VolunteerSkill_skillId_idx_6e19993d",
+        "table": "VolunteerSkill"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"VolunteerSkill_skillId_idx_6e19993d\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "VolunteerSkill_skillId_idx_6e19993d"],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"VolunteerSkill_skillId_idx_6e19993d\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"VolunteerSkill_skillId_idx_6e19993d\"",
+        "sql": "CREATE INDEX \"VolunteerSkill_skillId_idx_6e19993d\" ON \"VolunteerSkill\" (\"skillId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"VolunteerSkill_skillId_idx_6e19993d\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": ["index", "VolunteerSkill_skillId_idx_6e19993d"],
+        "expectation": {
+          "expects": "present",
+          "object": "index \"VolunteerSkill_skillId_idx_6e19993d\""
+        }
+      },
+      {
+        "description": "verify index \"VolunteerSkill_skillId_idx_6e19993d\" on \"VolunteerSkill\" covers (skillId)",
+        "sql": "SELECT EXISTS (SELECT 1 FROM pragma_index_list('VolunteerSkill') WHERE name = 'VolunteerSkill_skillId_idx_6e19993d' AND \"unique\" = 0) AND (SELECT COUNT(*) FROM pragma_index_info('VolunteerSkill_skillId_idx_6e19993d')) = 1 AND (SELECT COUNT(*) FROM pragma_index_info('VolunteerSkill_skillId_idx_6e19993d') WHERE (seqno, name) IN (VALUES (0, 'skillId'))) = 1"
+      }
+    ]
+  }
+]

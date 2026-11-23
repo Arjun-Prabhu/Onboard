@@ -1,0 +1,101 @@
+[
+  {
+    "id": "recreateTable.AuthSession",
+    "label": "Recreate table AuthSession",
+    "summary": "Recreates table AuthSession to apply schema changes: database/AuthSession/column:lastSeenAt",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "AuthSession"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"AuthSession\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "AuthSession"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"AuthSession\""
+        }
+      },
+      {
+        "description": "ensure temp table \"_prisma_new_AuthSession\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "_prisma_new_AuthSession"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "temp table \"_prisma_new_AuthSession\""
+        }
+      },
+      {
+        "description": "ensure table \"AuthSession\" has exactly the columns the rebuild copies or leaves out (createdAt, expiresAt, id, tokenHash, userId)",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('AuthSession')) = 5 AND (SELECT COUNT(*) FROM pragma_table_info('AuthSession') WHERE name IN ('createdAt', 'expiresAt', 'id', 'tokenHash', 'userId')) = 5"
+      }
+    ],
+    "execute": [
+      {
+        "description": "create new table \"_prisma_new_AuthSession\" with desired schema",
+        "sql": "CREATE TABLE \"_prisma_new_AuthSession\" (\n  \"createdAt\" TEXT NOT NULL,\n  \"expiresAt\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"lastSeenAt\" TEXT NOT NULL,\n  \"tokenHash\" TEXT NOT NULL,\n  \"userId\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"tokenHash\"),\n  FOREIGN KEY (\"userId\") REFERENCES \"User\" (\"id\")\n)"
+      },
+      {
+        "description": "copy data from \"AuthSession\" to \"_prisma_new_AuthSession\"",
+        "sql": "INSERT INTO \"_prisma_new_AuthSession\" (\"createdAt\", \"expiresAt\", \"id\", \"lastSeenAt\", \"tokenHash\", \"userId\") SELECT \"createdAt\", \"expiresAt\", \"id\", '', \"tokenHash\", \"userId\" FROM \"AuthSession\""
+      },
+      {
+        "description": "drop old table \"AuthSession\"",
+        "sql": "DROP TABLE \"AuthSession\""
+      },
+      {
+        "description": "rename \"_prisma_new_AuthSession\" to \"AuthSession\"",
+        "sql": "ALTER TABLE \"_prisma_new_AuthSession\" RENAME TO \"AuthSession\""
+      },
+      {
+        "description": "recreate index \"AuthSession_userId_idx_a489d58a\" on \"AuthSession\"",
+        "sql": "CREATE INDEX \"AuthSession_userId_idx_a489d58a\" ON \"AuthSession\" (\"userId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"AuthSession\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "AuthSession"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"AuthSession\""
+        }
+      },
+      {
+        "description": "verify temp table \"_prisma_new_AuthSession\" is gone",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "_prisma_new_AuthSession"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "temp table \"_prisma_new_AuthSession\""
+        }
+      },
+      {
+        "description": "verify \"AuthSession\" is stored as the rebuilt table",
+        "sql": "SELECT (SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'AuthSession') = 'CREATE TABLE \"AuthSession\" (\n  \"createdAt\" TEXT NOT NULL,\n  \"expiresAt\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"lastSeenAt\" TEXT NOT NULL,\n  \"tokenHash\" TEXT NOT NULL,\n  \"userId\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  UNIQUE (\"tokenHash\"),\n  FOREIGN KEY (\"userId\") REFERENCES \"User\" (\"id\")\n)'"
+      },
+      {
+        "description": "verify \"lastSeenAt\" nullability on \"AuthSession\"",
+        "sql": "SELECT COUNT(*) > 0 FROM pragma_table_info('AuthSession') WHERE name = 'lastSeenAt' AND \"notnull\" = 1"
+      }
+    ]
+  }
+]

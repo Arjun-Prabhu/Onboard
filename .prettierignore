@@ -1,0 +1,7 @@
+node_modules
+dist
+data
+package-lock.json
+server/prisma/contract.json
+server/prisma/contract.d.ts
+server/prisma/migrations

@@ -1,0 +1,54 @@
+[
+  {
+    "id": "table.OwnershipOffer",
+    "label": "Create table OwnershipOffer",
+    "summary": "Creates table OwnershipOffer with required columns",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "OwnershipOffer"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"OwnershipOffer\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "OwnershipOffer"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"OwnershipOffer\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"OwnershipOffer\"",
+        "sql": "CREATE TABLE \"OwnershipOffer\" (\n  \"createdAt\" TEXT NOT NULL,\n  \"fromUserId\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"orgId\" TEXT NOT NULL,\n  \"status\" TEXT NOT NULL,\n  \"stepDown\" INTEGER NOT NULL,\n  \"toUserId\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"OwnershipOffer\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "OwnershipOffer"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"OwnershipOffer\""
+        }
+      },
+      {
+        "description": "verify table \"OwnershipOffer\" has exactly its columns",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('OwnershipOffer')) = 7 AND (SELECT COUNT(*) FROM pragma_table_info('OwnershipOffer') WHERE (name, LOWER(type), \"notnull\", pk) IN (VALUES ('createdAt', 'text', 1, 0), ('fromUserId', 'text', 1, 0), ('id', 'text', 1, 1), ('orgId', 'text', 1, 0), ('status', 'text', 1, 0), ('stepDown', 'integer', 1, 0), ('toUserId', 'text', 1, 0))) = 7"
+      }
+    ]
+  }
+]

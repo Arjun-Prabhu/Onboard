@@ -1,0 +1,153 @@
+[
+  {
+    "id": "column.OrgSkill.description",
+    "label": "Add column description on OrgSkill",
+    "summary": "Adds column description on OrgSkill",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "column",
+        "name": "description",
+        "table": "OrgSkill"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"description\" is missing",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "OrgSkill",
+          "description"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "column \"description\" on \"OrgSkill\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"description\"",
+        "sql": "ALTER TABLE \"OrgSkill\" ADD COLUMN \"description\" TEXT"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"description\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM pragma_table_info(?1) WHERE \"name\" = ?2",
+        "params": [
+          "OrgSkill",
+          "description"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"description\" on \"OrgSkill\""
+        }
+      },
+      {
+        "description": "verify column \"description\" on \"OrgSkill\" has type TEXT and is optional",
+        "sql": "SELECT COUNT(*) > 0 FROM pragma_table_info('OrgSkill') WHERE name = 'description' AND LOWER(type) = 'text' AND \"notnull\" = 0"
+      }
+    ]
+  },
+  {
+    "id": "recreateTable.Program",
+    "label": "Recreate table Program",
+    "summary": "Recreates table Program to apply schema changes: database/Program/column:oneOff",
+    "operationClass": "additive",
+    "target": {
+      "id": "sqlite",
+      "details": {
+        "objectType": "table",
+        "name": "Program"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Program\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "Program"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Program\""
+        }
+      },
+      {
+        "description": "ensure temp table \"_prisma_new_Program\" does not exist",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "_prisma_new_Program"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "temp table \"_prisma_new_Program\""
+        }
+      },
+      {
+        "description": "ensure table \"Program\" has exactly the columns the rebuild copies or leaves out (archived, description, endDate, id, name, participantCount, siteId, startDate, targetRatio, type)",
+        "sql": "SELECT (SELECT COUNT(*) FROM pragma_table_info('Program')) = 10 AND (SELECT COUNT(*) FROM pragma_table_info('Program') WHERE name IN ('archived', 'description', 'endDate', 'id', 'name', 'participantCount', 'siteId', 'startDate', 'targetRatio', 'type')) = 10"
+      }
+    ],
+    "execute": [
+      {
+        "description": "create new table \"_prisma_new_Program\" with desired schema",
+        "sql": "CREATE TABLE \"_prisma_new_Program\" (\n  \"archived\" INTEGER NOT NULL,\n  \"description\" TEXT NOT NULL,\n  \"endDate\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"name\" TEXT NOT NULL,\n  \"oneOff\" INTEGER NOT NULL,\n  \"participantCount\" INTEGER NOT NULL,\n  \"siteId\" TEXT NOT NULL,\n  \"startDate\" TEXT NOT NULL,\n  \"targetRatio\" INTEGER,\n  \"type\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  FOREIGN KEY (\"siteId\") REFERENCES \"Site\" (\"id\")\n)"
+      },
+      {
+        "description": "copy data from \"Program\" to \"_prisma_new_Program\"",
+        "sql": "INSERT INTO \"_prisma_new_Program\" (\"archived\", \"description\", \"endDate\", \"id\", \"name\", \"oneOff\", \"participantCount\", \"siteId\", \"startDate\", \"targetRatio\", \"type\") SELECT \"archived\", \"description\", \"endDate\", \"id\", \"name\", 0, \"participantCount\", \"siteId\", \"startDate\", \"targetRatio\", \"type\" FROM \"Program\""
+      },
+      {
+        "description": "drop old table \"Program\"",
+        "sql": "DROP TABLE \"Program\""
+      },
+      {
+        "description": "rename \"_prisma_new_Program\" to \"Program\"",
+        "sql": "ALTER TABLE \"_prisma_new_Program\" RENAME TO \"Program\""
+      },
+      {
+        "description": "recreate index \"Program_siteId_idx_cabdc5ab\" on \"Program\"",
+        "sql": "CREATE INDEX \"Program_siteId_idx_cabdc5ab\" ON \"Program\" (\"siteId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Program\" exists",
+        "sql": "SELECT COUNT(*) > 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "Program"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Program\""
+        }
+      },
+      {
+        "description": "verify temp table \"_prisma_new_Program\" is gone",
+        "sql": "SELECT COUNT(*) = 0 AS \"result\" FROM \"sqlite_master\" WHERE (\"type\" = ?1 AND \"name\" = ?2)",
+        "params": [
+          "table",
+          "_prisma_new_Program"
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "temp table \"_prisma_new_Program\""
+        }
+      },
+      {
+        "description": "verify \"Program\" is stored as the rebuilt table",
+        "sql": "SELECT (SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'Program') = 'CREATE TABLE \"Program\" (\n  \"archived\" INTEGER NOT NULL,\n  \"description\" TEXT NOT NULL,\n  \"endDate\" TEXT NOT NULL,\n  \"id\" TEXT NOT NULL,\n  \"name\" TEXT NOT NULL,\n  \"oneOff\" INTEGER NOT NULL,\n  \"participantCount\" INTEGER NOT NULL,\n  \"siteId\" TEXT NOT NULL,\n  \"startDate\" TEXT NOT NULL,\n  \"targetRatio\" INTEGER,\n  \"type\" TEXT NOT NULL,\n  PRIMARY KEY (\"id\"),\n  FOREIGN KEY (\"siteId\") REFERENCES \"Site\" (\"id\")\n)'"
+      },
+      {
+        "description": "verify \"oneOff\" nullability on \"Program\"",
+        "sql": "SELECT COUNT(*) > 0 FROM pragma_table_info('Program') WHERE name = 'oneOff' AND \"notnull\" = 1"
+      }
+    ]
+  }
+]

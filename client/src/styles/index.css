@@ -1,0 +1,214 @@
+/*
+ * Onboard design tokens + Tailwind v4 theme.
+ *
+ * Every color is a CSS variable switched by `data-theme` on <html> (light / dark / contrast),
+ * so themes swap without re-rendering React. Tailwind utilities like `bg-surface` and
+ * `text-ink-muted` read these variables. All text tokens meet 4.5:1 on their surfaces
+ * (NFR-4); the high-contrast theme exceeds 7:1.
+ */
+@import 'tailwindcss';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+@theme inline {
+  --color-canvas: var(--rh-canvas);
+  --color-surface: var(--rh-surface);
+  --color-surface-2: var(--rh-surface-2);
+  --color-line: var(--rh-line);
+  --color-line-strong: var(--rh-line-strong);
+  --color-ink: var(--rh-ink);
+  --color-ink-muted: var(--rh-ink-muted);
+  --color-primary: var(--rh-primary);
+  --color-primary-hover: var(--rh-primary-hover);
+  --color-on-primary: var(--rh-on-primary);
+  --color-primary-soft: var(--rh-primary-soft);
+  --color-accent: var(--rh-accent);
+  --color-on-accent: var(--rh-on-accent);
+  --color-rail: var(--rh-rail);
+  --color-rail-ink: var(--rh-rail-ink);
+  --color-rail-muted: var(--rh-rail-muted);
+  --color-rail-hover: var(--rh-rail-hover);
+  --color-rail-line: var(--rh-rail-line);
+  --color-good: var(--rh-good);
+  --color-good-soft: var(--rh-good-soft);
+  --color-warn: var(--rh-warn);
+  --color-warn-soft: var(--rh-warn-soft);
+  --color-bad: var(--rh-bad);
+  --color-bad-soft: var(--rh-bad-soft);
+  --color-focus: var(--rh-focus);
+  --font-sans: var(--rh-font-body);
+  --font-display: var(--rh-font-display);
+  --radius-control: 6px;
+  --radius-panel: 10px;
+}
+
+:root {
+  /* Light — "aluminum": cool gray ground, graphite ink, cobalt actions, signal-yellow highlights. */
+  --rh-canvas: #eef1f4;
+  --rh-surface: #ffffff;
+  --rh-surface-2: #f6f8fa;
+  --rh-line: #d8dee5;
+  --rh-line-strong: #9aa6b4;
+  --rh-ink: #14202e;
+  --rh-ink-muted: #4b5a6b;
+  --rh-primary: #1f4fd1;
+  --rh-primary-hover: #1a43b3;
+  --rh-on-primary: #ffffff;
+  --rh-primary-soft: #e6edfc;
+  --rh-accent: #f2b600;
+  --rh-on-accent: #14202e;
+  /* Sidebar follows the theme: a light, slightly cooler panel beside the white pages. */
+  --rh-rail: #e2e7ed;
+  --rh-rail-ink: #14202e;
+  --rh-rail-muted: #4b5a6b;
+  --rh-rail-hover: rgb(20 32 46 / 0.08);
+  --rh-rail-line: rgb(20 32 46 / 0.14);
+  --rh-rail-dot: rgb(20 32 46 / 0.07);
+  --rh-good: #0d6b3a;
+  --rh-good-soft: #e3f3ea;
+  --rh-warn: #8a5300;
+  --rh-warn-soft: #fdf1d8;
+  --rh-bad: #b4231b;
+  --rh-bad-soft: #fbe6e4;
+  --rh-focus: #1f4fd1;
+  /* Chart series (dataviz reference palette, fixed order, validated for CVD). */
+  --rh-series-1: #2a78d6;
+  --rh-series-2: #eb6834;
+  --rh-series-3: #1baf7a;
+  --rh-series-4: #eda100;
+  --rh-series-5: #e87ba4;
+  --rh-series-6: #008300;
+  --rh-chart-grid: #e3e8ee;
+  --rh-font-body: 'Inter Variable', system-ui, sans-serif;
+  --rh-font-display: 'Barlow Semi Condensed', 'Inter Variable', system-ui, sans-serif;
+  --rh-scale: 1;
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --rh-canvas: #0e1620;
+  --rh-surface: #16212d;
+  --rh-surface-2: #1c2937;
+  --rh-line: #2c3a4a;
+  --rh-line-strong: #5b6b7d;
+  --rh-ink: #eef2f6;
+  --rh-ink-muted: #a9b6c4;
+  --rh-primary: #7aa2ff;
+  --rh-primary-hover: #97b6ff;
+  --rh-on-primary: #0b1526;
+  --rh-primary-soft: #1d2d4d;
+  --rh-rail: #0a1018;
+  --rh-rail-ink: #f2f5f8;
+  --rh-rail-muted: #a9b6c4;
+  --rh-rail-hover: rgb(255 255 255 / 0.1);
+  --rh-rail-line: rgb(255 255 255 / 0.12);
+  --rh-rail-dot: rgb(255 255 255 / 0.07);
+  --rh-good: #5fd497;
+  --rh-good-soft: #133325;
+  --rh-warn: #f5c35b;
+  --rh-warn-soft: #3a2c10;
+  --rh-bad: #ff8a80;
+  --rh-bad-soft: #3d1a18;
+  --rh-focus: #f2b600;
+  --rh-series-1: #3987e5;
+  --rh-series-2: #d95926;
+  --rh-series-3: #199e70;
+  --rh-series-4: #c98500;
+  --rh-series-5: #d55181;
+  --rh-series-6: #0ca30c;
+  --rh-chart-grid: #2c3a4a;
+  color-scheme: dark;
+}
+
+[data-theme='contrast'] {
+  --rh-canvas: #ffffff;
+  --rh-surface: #ffffff;
+  --rh-surface-2: #ffffff;
+  --rh-line: #000000;
+  --rh-line-strong: #000000;
+  --rh-ink: #000000;
+  --rh-ink-muted: #1a1a1a;
+  --rh-primary: #0030a8;
+  --rh-primary-hover: #001f70;
+  --rh-primary-soft: #dfe7ff;
+  --rh-rail: #000000;
+  --rh-rail-ink: #ffffff;
+  --rh-rail-muted: #ffffff;
+  --rh-rail-hover: rgb(255 255 255 / 0.2);
+  --rh-rail-line: #ffffff;
+  --rh-rail-dot: transparent;
+  --rh-good: #00501f;
+  --rh-warn: #5c3400;
+  --rh-bad: #8a0000;
+  --rh-focus: #c00060;
+}
+
+[data-font='dyslexia'] {
+  --rh-font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --rh-font-display: 'Atkinson Hyperlegible', system-ui, sans-serif;
+}
+
+/* rem-based font scaling (NFR-4): every Tailwind size is rem, so this scales the whole UI. */
+html {
+  font-size: calc(100% * var(--rh-scale));
+}
+
+body {
+  margin: 0;
+  background: var(--rh-canvas);
+  color: var(--rh-ink);
+  font-family: var(--rh-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--rh-font-display);
+  letter-spacing: 0.005em;
+}
+
+/* Visible focus ring everywhere — never removed, only restyled. */
+:focus-visible {
+  outline: 3px solid var(--rh-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* A quiet dot grid (the seat-meter motif), used as the sidebar texture. */
+.peg-grid {
+  background-image: radial-gradient(circle, var(--rh-rail-dot) 2.2px, transparent 2.6px);
+  background-size: 18px 18px;
+  background-position: 9px 9px;
+}
+
+/* Reduced motion: honor both the OS setting and the in-app toggle. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+[data-motion='reduce'] *,
+[data-motion='reduce'] *::before,
+[data-motion='reduce'] *::after {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+}
+
+@keyframes rh-pop {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-pop {
+  animation: rh-pop 160ms ease-out;
+}
